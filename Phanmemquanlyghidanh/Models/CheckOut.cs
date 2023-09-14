@@ -5,7 +5,7 @@ namespace Phanmemquanlyghidanh.Models
     public class CheckOut
     {
         [Key]
-        public int CheckOut_ID { get; set; }
+        public int CheckOut_Id { get; set; }
 
         public string CheckOut_Name { get; set; }
 

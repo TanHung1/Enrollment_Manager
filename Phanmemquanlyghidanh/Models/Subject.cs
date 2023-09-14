@@ -5,9 +5,9 @@ namespace Phanmemquanlyghidanh.Models
     public class Subject
     {
         [Key]
-        public int Subject_ID { get; set; }
+        public int Subject_Id { get; set; }
 
-        public int SubjectCategory_ID { get; set; }
+
         public string Subject_Name { get; set; }
 
         public string Level { get; set; }

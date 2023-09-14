@@ -5,7 +5,7 @@ namespace Phanmemquanlyghidanh.Models
     public class StatusRoom
     {
         [Key]
-        public int StatusRoom_ID { get; set; }
+        public int StatusRoom_Id { get; set; }
 
         public string StatusRoom_Name { get; set; }
 

@@ -5,7 +5,7 @@ namespace Phanmemquanlyghidanh.Models
     public class SubjectCategory
     {
         [Key]
-        public int SubjectCategory_ID { get; set; }
+        public int SubjectCategory_Id { get; set; }
 
         public string SubjectCategory_Name { get; set; }
 

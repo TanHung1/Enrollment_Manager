@@ -5,7 +5,7 @@ namespace Phanmemquanlyghidanh.Models
     public class Student
     {
         [Key]
-        public int Student_ID { get; set; }
+        public int Student_Id { get; set; }
         public string Student_FirstName { get; set; }
         public string Student_LastName { get; set; }
 
@@ -22,7 +22,7 @@ namespace Phanmemquanlyghidanh.Models
         public string Student_Avatar { get; set; }
         public string Password { get; set; }
 
-        public int CheckOut_ID { get; set; }
+
         public virtual ICollection<ClassRoom> ClassRooms { get; set; } = new List<ClassRoom>();
 
     }

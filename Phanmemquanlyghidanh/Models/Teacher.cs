@@ -5,7 +5,7 @@ namespace Phanmemquanlyghidanh.Models
     public class Teacher
     {
         [Key]
-        public int Teacher_ID { get; set; }
+        public int Teacher_Id { get; set; }
         public string Teacher_FirstName { get; set; }
 
         public string Teacher_LastName { get; set; }
@@ -20,7 +20,8 @@ namespace Phanmemquanlyghidanh.Models
 
         public string Teacher_PhoneNumber { get; set; }
 
-        public int Subject_ID { get; set; }
+        public DateTime CooperationDay { get; set; }
+
 
         public string Subject { get; set; }
 
