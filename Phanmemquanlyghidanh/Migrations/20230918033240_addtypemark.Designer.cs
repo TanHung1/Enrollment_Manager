@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Phanmemquanlyghidanh.Models;
 
@@ -11,9 +12,11 @@ using Phanmemquanlyghidanh.Models;
 namespace Phanmemquanlyghidanh.Migrations
 {
     [DbContext(typeof(EnrollmentDBContext))]
-    partial class EnrollmentDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230918033240_addtypemark")]
+    partial class addtypemark
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,9 +81,6 @@ namespace Phanmemquanlyghidanh.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Subject")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -91,8 +91,6 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CheckOut_Id");
-
-                    b.HasIndex("RoleId");
 
                     b.HasIndex("Subject_Id");
 
@@ -198,12 +196,6 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.Property<decimal>("AverageColumnPoint")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("FinalExamPoint1")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FinalExamPoint2")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("FirstColumnPoint")
                         .HasColumnType("decimal(18,2)");
 
@@ -224,23 +216,6 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.HasIndex("TypeMarkTypeID");
 
                     b.ToTable("Marks");
-                });
-
-            modelBuilder.Entity("Phanmemquanlyghidanh.Models.Role", b =>
-                {
-                    b.Property<int>("RoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RoleId");
-
-                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.Schedule", b =>
@@ -361,10 +336,6 @@ namespace Phanmemquanlyghidanh.Migrations
                         .WithMany("Accounts")
                         .HasForeignKey("CheckOut_Id");
 
-                    b.HasOne("Phanmemquanlyghidanh.Models.Role", null)
-                        .WithMany("Accounts")
-                        .HasForeignKey("RoleId");
-
                     b.HasOne("Phanmemquanlyghidanh.Models.Subject", null)
                         .WithMany("Accounts")
                         .HasForeignKey("Subject_Id");
@@ -426,11 +397,6 @@ namespace Phanmemquanlyghidanh.Migrations
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.Mark", b =>
                 {
                     b.Navigation("Subjects");
-                });
-
-            modelBuilder.Entity("Phanmemquanlyghidanh.Models.Role", b =>
-                {
-                    b.Navigation("Accounts");
                 });
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.Schedule", b =>

@@ -14,7 +14,7 @@ namespace Phanmemquanlyghidanh.Models
 
         public int Age { get; set; }
 
-        public virtual ICollection<Teacher> Teachers { get; set; } = new List<Teacher>();
+        public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 
         public virtual ICollection<ClassRoom> Classrooms { get; set; } = new List<ClassRoom>();
     }

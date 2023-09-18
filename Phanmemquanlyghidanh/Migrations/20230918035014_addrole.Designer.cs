@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Phanmemquanlyghidanh.Models;
 
@@ -11,9 +12,11 @@ using Phanmemquanlyghidanh.Models;
 namespace Phanmemquanlyghidanh.Migrations
 {
     [DbContext(typeof(EnrollmentDBContext))]
-    partial class EnrollmentDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230918035014_addrole")]
+    partial class addrole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,12 +199,6 @@ namespace Phanmemquanlyghidanh.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MarkId"));
 
                     b.Property<decimal>("AverageColumnPoint")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FinalExamPoint1")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FinalExamPoint2")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("FirstColumnPoint")

@@ -14,9 +14,7 @@ namespace Phanmemquanlyghidanh.Models
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Student> Students { get; set; }
-
-        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Account> Accounts { get; set; }
 
         public DbSet<ClassRoom> ClassRooms { get; set; }
 
@@ -29,5 +27,10 @@ namespace Phanmemquanlyghidanh.Models
         public DbSet<StatusRoom> StatusRooms { get; set; }
 
         public DbSet<CheckOut> CheckOutRooms { get; set; }
+
+        public DbSet<Mark> Marks { get; set; }
+
+        public DbSet<TypeMark> TypeMarks { get; set; }
+        public DbSet<Role> Roles { get; set; }
     }
 }
