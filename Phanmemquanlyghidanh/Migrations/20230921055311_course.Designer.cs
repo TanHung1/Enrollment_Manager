@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Phanmemquanlyghidanh.Models;
 
@@ -11,9 +12,11 @@ using Phanmemquanlyghidanh.Models;
 namespace Phanmemquanlyghidanh.Migrations
 {
     [DbContext(typeof(EnrollmentDBContext))]
-    partial class EnrollmentDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230921055311_course")]
+    partial class course
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,29 +205,6 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.HasKey("Course_Id");
 
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("Phanmemquanlyghidanh.Models.HolidaySchedule", b =>
-                {
-                    b.Property<int>("HolidayId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HolidayId"));
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NameHoliday")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDay")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("HolidayId");
-
-                    b.ToTable("HolidaySchedules");
                 });
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.Mark", b =>

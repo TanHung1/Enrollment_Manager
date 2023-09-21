@@ -32,5 +32,9 @@ namespace Phanmemquanlyghidanh.Models
 
         public DbSet<TypeMark> TypeMarks { get; set; }
         public DbSet<Role> Roles { get; set; }
+
+        public DbSet<Course> Courses { get; set; }
+
+        public DbSet<HolidaySchedule> HolidaySchedules { get; set; }
     }
 }
