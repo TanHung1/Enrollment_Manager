@@ -7,7 +7,7 @@ namespace Phanmemquanlyghidanh.Repository
 
         public bool Update(StatusRoom statusRoom);
 
-        public StatusRoom FindById(int id);
+
 
         public bool Delete(int id);
 
@@ -37,11 +37,7 @@ namespace Phanmemquanlyghidanh.Repository
             return true;
         }
 
-        public StatusRoom FindById(int id)
-        {
-            StatusRoom s = _dbcontext.StatusRooms.FirstOrDefault(x => x.StatusRoom_Id == id);
-            return s;
-        }
+
 
         public List<StatusRoom> GetAll()
         {

@@ -10,6 +10,6 @@ namespace Phanmemquanlyghidanh.Models
 
         public string TypeName { get; set; }
 
-        public virtual ICollection<Mark> Marks { get; set; } = new List<Mark>();
+
     }
 }
