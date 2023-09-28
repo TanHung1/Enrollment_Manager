@@ -21,6 +21,16 @@ namespace YourNamespace.Controllers
             var marks = _typeMarkRepository.GetMarkList();
             return Ok(marks);
         }
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var typeMark = _typeMarkRepository.GetMark(id);
+            if (typeMark == null)
+            {
+                return NotFound();
+            }
+            return Ok(typeMark);
+        }
 
         [HttpPost]
         public IActionResult Create(TypeMark typemark)

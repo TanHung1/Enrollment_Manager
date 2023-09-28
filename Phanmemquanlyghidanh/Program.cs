@@ -20,6 +20,8 @@ builder.Services.AddDbContext<EnrollmentDBContext>(options =>
 builder.Services.AddTransient<IStatusRoomRepository, StatusRoomRepository>();
 builder.Services.AddTransient<ISubjectCategoryRepository, SubjectCategoryRepository>();
 builder.Services.AddTransient<ITypeMarkRepository, TypeMarkRepository>();
+builder.Services.AddTransient<IHolidayScheduleRepository, HolidayScheduleRepository>();
+builder.Services.AddTransient<ICourseRepository, CourseRepository>();
 
 var app = builder.Build();
 
