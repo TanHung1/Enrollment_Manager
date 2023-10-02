@@ -23,6 +23,8 @@ namespace Phanmemquanlyghidanh.Models
 
         public string SchoolRoom { get; set; }
 
+        public string Avatar { get; set; }
+
 
     }
 }

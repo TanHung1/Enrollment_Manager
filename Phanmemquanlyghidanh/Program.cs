@@ -22,6 +22,12 @@ builder.Services.AddTransient<ISubjectCategoryRepository, SubjectCategoryReposit
 builder.Services.AddTransient<ITypeMarkRepository, TypeMarkRepository>();
 builder.Services.AddTransient<IHolidayScheduleRepository, HolidayScheduleRepository>();
 builder.Services.AddTransient<ICourseRepository, CourseRepository>();
+builder.Services.AddTransient<IScheduleRepository, ScheduleRepository>();
+builder.Services.AddTransient<IAccountRepository, AccountRepository>();
+builder.Services.AddTransient<ICheckOutRepository, CheckOutRepository>();
+builder.Services.AddTransient<IClassRoomRepository, ClassRoomRepository>();
+builder.Services.AddTransient<IMarkRepository, MarkRepository>();
+builder.Services.AddTransient<ISubjectRepository, SubjectRepository>();
 
 var app = builder.Build();
 

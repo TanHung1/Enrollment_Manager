@@ -8,6 +8,7 @@ namespace Phanmemquanlyghidanh.Models
         public int HolidayId { get; set; }
 
         public string NameHoliday { get; set; }
+        public string Reason { get; set; }
 
         public DateTime StartDay { get; set; }
 

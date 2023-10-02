@@ -9,6 +9,8 @@ namespace Phanmemquanlyghidanh.Models
 
         public string Schedule_Name { get; set; }
 
+        public string Day { get; set; }
+
         public DateTime TimeStart { get; set; }
 
         public DateTime TimeEnd { get; set; }

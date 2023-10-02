@@ -10,6 +10,7 @@ namespace Phanmemquanlyghidanh.Models
 
         public string TypeName { get; set; }
 
+        public string Coefficient { get; set; }
 
     }
 }
