@@ -15,6 +15,8 @@ namespace Phanmemquanlyghidanh.Controllers
             _accountRepository = accountRepository;
         }
 
+
+
         // GET: api/Accounts
         [HttpGet]
         public IEnumerable<Account> GetAccounts()
@@ -75,6 +77,29 @@ namespace Phanmemquanlyghidanh.Controllers
             }
 
             return NotFound();
+        }
+
+        [HttpPost("Login")]
+        public IActionResult Login(Account account)
+        {
+            bool success = _accountRepository.Login(account.Email, account.Password);
+            if (success)
+            {
+                return Ok("Thanh cong");
+            }
+            return BadRequest("Đăng nhập thất bại, tài khoản hoặc mật khẩu không đúng");
+        }
+
+        [HttpPost("Register")]
+        public IActionResult Register(Account account)
+        {
+            bool register = _accountRepository.Register(account.Email, account.Password);
+            if (register)
+            {
+                return Ok("Đăng ký thành công");
+
+            }
+            return BadRequest("Đăng ký thất bại, Email đã tồn tại");
         }
     }
 }

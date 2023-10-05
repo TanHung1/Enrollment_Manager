@@ -10,6 +10,9 @@ namespace Phanmemquanlyghidanh.Repository
         public bool UpdateAccount(Account account);
         public bool DeleteAccount(int Id);
         public Account GetAccountById(int id);
+
+        public bool Register(string email, string password);
+        public bool Login(string email, string password);
     }
     public class AccountRepository : IAccountRepository
     {
@@ -44,6 +47,28 @@ namespace Phanmemquanlyghidanh.Repository
         {
             return _dbContext.Accounts.ToList();
 
+        }
+
+        public bool Login(string email, string password)
+        {
+            var account = _dbContext.Accounts.FirstOrDefault(x => x.Email == email && x.Password == password);
+            if (account != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool Register(string email, string password)
+        {
+            if (_dbContext.Accounts.Any(x => x.Email == email))
+            {
+                return false;
+            }
+            var account = new Account { Email = email, Password = password };
+            _dbContext.Accounts.Add(account);
+            _dbContext.SaveChanges();
+            return true;
         }
 
         public bool UpdateAccount(Account account)
