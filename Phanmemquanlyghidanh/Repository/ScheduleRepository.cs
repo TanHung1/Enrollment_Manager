@@ -11,6 +11,8 @@ namespace Phanmemquanlyghidanh.Repository
         public bool Create(Schedule schedule);
         public bool Update(Schedule schedule);
         public bool Delete(int Id);
+
+        public List<Schedule> SearchByName(string name);
     }
     public class ScheduleRepository : IScheduleRepository
     {
@@ -44,6 +46,11 @@ namespace Phanmemquanlyghidanh.Repository
         {
             Schedule schedule = _dbContext.Schedules.FirstOrDefault(x => x.Schedule_Id == id);
             return schedule;
+        }
+
+        public List<Schedule> SearchByName(string name)
+        {
+            return _dbContext.Schedules.Where(x => x.Schedule_Name.Contains(name)).ToList();
         }
 
         public bool Update(Schedule schedule)

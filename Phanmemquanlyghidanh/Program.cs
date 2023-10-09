@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Phanmemquanlyghidanh.Models;
 using Phanmemquanlyghidanh.Repository;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +17,8 @@ builder.Services.AddDbContext<EnrollmentDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("EnrollmentDB"));
 });
+
+
 
 // Defendence Intraction
 builder.Services.AddTransient<IStatusRoomRepository, StatusRoomRepository>();
@@ -39,6 +43,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication(); ;
 
 app.UseAuthorization();
 

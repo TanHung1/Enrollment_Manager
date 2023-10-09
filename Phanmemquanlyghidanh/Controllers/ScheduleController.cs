@@ -27,11 +27,20 @@ namespace Phanmemquanlyghidanh.Controllers
         {
             Schedule schedule = _scheduleRepository.GetById(id);
             if (schedule == null)
-                return NotFound();
+                return NotFound("Không tìm thấy Id");
 
             return Ok(schedule);
         }
-
+        [HttpGet("search/{name}")]
+        public IActionResult SearchByName(string name)
+        {
+            var SearchResults = _scheduleRepository.SearchByName(name);
+            if (!SearchResults.Any())
+            {
+                return NotFound("Không tìm thấy loại điểm");
+            }
+            return Ok(SearchResults);
+        }
         [HttpPost]
         public IActionResult Create(Schedule schedule)
         {
@@ -42,36 +51,35 @@ namespace Phanmemquanlyghidanh.Controllers
                     return Ok(schedule);
             }
 
-            return BadRequest();
+            return BadRequest("Tạo thất bại");
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, Schedule schedule)
         {
-            if (ModelState.IsValid)
+            schedule.Schedule_Id = id;
+            var result = _scheduleRepository.Update(schedule);
+            if (result)
             {
-                Schedule existingSchedule = _scheduleRepository.GetById(id);
-                if (existingSchedule == null)
-                    return NotFound();
-
-                schedule.Schedule_Id = existingSchedule.Schedule_Id; // Ensure the ID remains unchanged
-
-                bool updated = _scheduleRepository.Update(schedule);
-                if (updated)
-                    return Ok(schedule);
+                return Ok("Cập nhật thành công");
             }
-
-            return BadRequest();
+            return BadRequest("Cập nhật thất bại");
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            bool deleted = _scheduleRepository.Delete(id);
-            if (deleted)
-                return NoContent();
-
-            return BadRequest();
+            var result = _scheduleRepository.GetById(id);
+            if (result == null)
+            {
+                return NotFound("Không tìm thấy Id");
+            }
+            var delete = _scheduleRepository.Delete(id);
+            if (delete)
+            {
+                return Ok("Xóa thành công");
+            }
+            return BadRequest("Xóa thất bại");
         }
     }
 }

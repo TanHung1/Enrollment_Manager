@@ -10,6 +10,7 @@ namespace Phanmemquanlyghidanh.Repository
         public bool Update(HolidaySchedule holidaySchedule);
         public bool Delete(int Id);
 
+        public List<HolidaySchedule> SearchByName(string name);
         public HolidaySchedule GetHolidaySchedule(int Id);
 
     }
@@ -45,6 +46,11 @@ namespace Phanmemquanlyghidanh.Repository
         {
             HolidaySchedule hs = _dbcontext.HolidaySchedules.FirstOrDefault(x => x.HolidayId == Id);
             return hs;
+        }
+
+        public List<HolidaySchedule> SearchByName(string name)
+        {
+            return _dbcontext.HolidaySchedules.Where(x => x.NameHoliday.Contains(name)).ToList();
         }
 
         public bool Update(HolidaySchedule holidaySchedule)

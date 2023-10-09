@@ -28,48 +28,58 @@ namespace Phanmemquanlyghidanh.Controllers
 
             if (subject == null)
             {
-                return NotFound();
+                return NotFound("Không tìm thấy");
             }
 
             return subject;
         }
-
+        [HttpGet("search/{name}")]
+        public IActionResult SearchByName(string name)
+        {
+            var SearchResults = _subjectRepository.SearchByName(name);
+            if (!SearchResults.Any())
+            {
+                return NotFound("Không tìm thấy loại điểm");
+            }
+            return Ok(SearchResults);
+        }
         [HttpPost]
         public ActionResult<Subject> CreateSubject(Subject subject)
         {
-            if (_subjectRepository.Create(subject))
+            if (ModelState.IsValid)
             {
-                return CreatedAtAction(nameof(GetSubject), new { id = subject.Subject_Id }, subject);
+                _subjectRepository.Create(subject);
+                return Ok("Tạo thành công");
             }
-
-            return BadRequest();
+            return BadRequest("Tạo thất bại");
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateSubject(int id, Subject subject)
         {
-            if (id != subject.Subject_Id)
+            subject.SubjectId = id;
+            var result = _subjectRepository.Update(subject);
+            if (result)
             {
-                return BadRequest();
+                return Ok("Cập nhật thành công");
             }
-
-            if (_subjectRepository.Update(subject))
-            {
-                return NoContent();
-            }
-
-            return NotFound();
+            return BadRequest("Cập nhật thất bại");
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteSubject(int id)
         {
-            if (_subjectRepository.Delete(id))
+            var result = _subjectRepository.Get1Subject(id);
+            if (result == null)
             {
-                return NoContent();
+                return NotFound("Không tìm thấy Id cần xóa");
             }
-
-            return NotFound();
+            var delete = _subjectRepository.Delete(id);
+            if (delete)
+            {
+                return Ok("Xóa thành công");
+            }
+            return BadRequest("Xóa thất bại");
         }
     }
 }

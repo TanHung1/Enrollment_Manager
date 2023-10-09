@@ -9,6 +9,7 @@ namespace Phanmemquanlyghidanh.Repository
         public bool Delete(int Id);
         public List<Role> GetAll();
 
+        public List<Role> SearchByName(string name);
         public Role GetById(int id);
     }
     public class RoleRepository : IRoleRepository
@@ -43,6 +44,11 @@ namespace Phanmemquanlyghidanh.Repository
         {
             Role role = _dbContext.Roles.FirstOrDefault(x => x.RoleId == id);
             return role;
+        }
+
+        public List<Role> SearchByName(string name)
+        {
+            return _dbContext.Roles.Where(x => x.RoleName.Contains(name)).ToList();
         }
 
         public bool Update(Role role)

@@ -11,7 +11,7 @@ namespace Phanmemquanlyghidanh.Repository
         public bool Delete(int Id);
         public Course GetById(int Id);
 
-
+        public List<Course> SearchByName(string name);
 
     }
     public class CourseRepository : ICourseRepository
@@ -46,6 +46,11 @@ namespace Phanmemquanlyghidanh.Repository
         {
             Course course = _dbcontext.Courses.FirstOrDefault(x => x.Course_Id == Id);
             return course;
+        }
+
+        public List<Course> SearchByName(string name)
+        {
+            return _dbcontext.Courses.Where(x => x.Course_Name.Contains(name)).ToList();
         }
 
         public bool Update(Course course)

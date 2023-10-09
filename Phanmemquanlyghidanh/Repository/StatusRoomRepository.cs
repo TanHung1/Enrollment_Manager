@@ -7,8 +7,8 @@ namespace Phanmemquanlyghidanh.Repository
 
         public bool Update(StatusRoom statusRoom);
 
-
-
+        public List<StatusRoom> SearchByName(string name);
+        public StatusRoom GetById(int id);
         public bool Delete(int id);
 
         public List<StatusRoom> GetAll();
@@ -42,6 +42,17 @@ namespace Phanmemquanlyghidanh.Repository
         public List<StatusRoom> GetAll()
         {
             return _dbcontext.StatusRooms.ToList();
+        }
+
+        public StatusRoom GetById(int id)
+        {
+            StatusRoom st = _dbcontext.StatusRooms.FirstOrDefault(x => x.StatusRoom_Id == id);
+            return st;
+        }
+
+        public List<StatusRoom> SearchByName(string name)
+        {
+            return _dbcontext.StatusRooms.Where(x => x.StatusRoom_Name.Contains(name)).ToList();
         }
 
         public bool Update(StatusRoom statusRoom)

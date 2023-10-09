@@ -11,6 +11,8 @@ namespace Phanmemquanlyghidanh.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -26,7 +28,7 @@ namespace Phanmemquanlyghidanh.Models
 
         public DbSet<StatusRoom> StatusRooms { get; set; }
 
-        public DbSet<CheckOut> CheckOutRooms { get; set; }
+        public DbSet<CheckOut> CheckOuts { get; set; }
 
         public DbSet<Mark> Marks { get; set; }
 

@@ -21,14 +21,23 @@ namespace Phanmemquanlyghidanh.Controllers
             var courses = _courseRepository.GetAll();
             return Ok(courses);
         }
-
+        [HttpGet("search/{name}")]
+        public IActionResult SearchByName(string name)
+        {
+            var SearchResults = _courseRepository.SearchByName(name);
+            if (!SearchResults.Any())
+            {
+                return NotFound("Không tìm thấy loại điểm");
+            }
+            return Ok(SearchResults);
+        }
         [HttpGet("{id}")]
         public ActionResult<Course> GetCourseById(int id)
         {
             var course = _courseRepository.GetById(id);
             if (course == null)
             {
-                return NotFound();
+                return NotFound("Không có khóa học cần tìm");
             }
             return Ok(course);
         }
@@ -36,53 +45,40 @@ namespace Phanmemquanlyghidanh.Controllers
         [HttpPost]
         public ActionResult<Course> CreateCourse(Course course)
         {
-            var created = _courseRepository.Create(course);
-            if (!created)
+            if (ModelState.IsValid)
             {
-                return BadRequest();
+                _courseRepository.Create(course);
+                return Ok("Tạo thành công");
             }
-            return CreatedAtAction(nameof(GetCourseById), new { id = course.Course_Id }, course);
+            return BadRequest("Tạo thất bại");
         }
 
         [HttpPut("{id}")]
         public ActionResult UpdateCourse(int id, Course course)
         {
-            if (id != course.Course_Id)
+            course.Course_Id = id;
+            var result = _courseRepository.Update(course);
+            if (result)
             {
-                return BadRequest();
+                return Ok("Cập nhật thành công");
             }
-
-            var existingCourse = _courseRepository.GetById(id);
-            if (existingCourse == null)
-            {
-                return NotFound();
-            }
-
-            var updated = _courseRepository.Update(course);
-            if (!updated)
-            {
-                return BadRequest();
-            }
-
-            return NoContent();
+            return BadRequest("Cập nhật thất bại");
         }
 
         [HttpDelete("{id}")]
         public ActionResult DeleteCourse(int id)
         {
-            var existingCourse = _courseRepository.GetById(id);
-            if (existingCourse == null)
+            var result = _courseRepository.GetById(id);
+            if (result == null)
             {
-                return NotFound();
+                return NotFound("Không tìm thấy Id cần xóa");
             }
-
-            var deleted = _courseRepository.Delete(id);
-            if (!deleted)
+            var delete = _courseRepository.Delete(id);
+            if (delete)
             {
-                return BadRequest();
+                return Ok("Xóa thành công");
             }
-
-            return NoContent();
+            return BadRequest("Xóa thất bại");
         }
     }
 }

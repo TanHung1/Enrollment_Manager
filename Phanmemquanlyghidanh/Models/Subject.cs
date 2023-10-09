@@ -5,17 +5,23 @@ namespace Phanmemquanlyghidanh.Models
     public class Subject
     {
         [Key]
-        public int Subject_Id { get; set; }
+        public int SubjectId { get; set; }
 
+        public int SubjectCategoryId { get; set; }
+        public int Course_Id { get; set; }
 
+        [Required(ErrorMessage = "Tên môn học không được để trống.")]
         public string Subject_Name { get; set; }
 
         public string Level { get; set; }
 
         public int Age { get; set; }
 
-        public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
+        public ICollection<ClassRoom> Classrooms { get; set; }
 
-        public virtual ICollection<ClassRoom> Classrooms { get; set; } = new List<ClassRoom>();
+        public ICollection<Mark> marks { get; set; }
+
+
+
     }
 }

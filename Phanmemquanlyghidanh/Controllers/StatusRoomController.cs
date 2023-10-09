@@ -14,75 +14,74 @@ namespace Phanmemquanlyghidanh.Controllers
         {
             _statusRoomRepository = statusRoomRepository;
         }
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var getall = _statusRoomRepository.GetAll();
+            return Ok(getall);
 
+        }
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var statusId = _statusRoomRepository.GetById(id);
+            if (statusId == null)
+            {
+                return NotFound("Không tim thây Id");
+            }
+            return Ok(statusId);
+        }
+        [HttpGet("search/{name}")]
+        public IActionResult SearchByName(string name)
+        {
+            var SearchResults = _statusRoomRepository.SearchByName(name);
+            if (!SearchResults.Any())
+            {
+                return NotFound("Không tìm thấy loại điểm");
+            }
+            return Ok(SearchResults);
+        }
         [HttpPost]
         public IActionResult Create(StatusRoom statusRoom)
         {
-            try
+            if (ModelState.IsValid)
             {
-                bool created = _statusRoomRepository.Create(statusRoom);
-                if (created)
-                    return Ok();
-                else
-                    return BadRequest();
+                _statusRoomRepository.Create(statusRoom);
+                return Ok("Tạo thành công");
+
             }
-            catch (Exception ex)
-            {
-                // Xử lý lỗi và trả về lỗi phù hợp
-                return StatusCode(500, ex.Message);
-            }
+            return BadRequest("Tạo thất bại");
+
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, StatusRoom statusRoom)
         {
-            try
+            statusRoom.StatusRoom_Id = id;
+            var resutl = _statusRoomRepository.Update(statusRoom);
+            if (resutl)
             {
-                statusRoom.StatusRoom_Id = id;
-                bool updated = _statusRoomRepository.Update(statusRoom);
-                if (updated)
-                    return Ok();
-                else
-                    return BadRequest();
+                return Ok("Cập nhật thành công");
             }
-            catch (Exception ex)
-            {
-                // Xử lý lỗi và trả về lỗi phù hợp
-                return StatusCode(500, ex.Message);
-            }
+            return BadRequest("Cập nhật thất bại");
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            try
+            var result = _statusRoomRepository.GetById(id);
+            if (result == null)
             {
-                bool deleted = _statusRoomRepository.Delete(id);
-                if (deleted)
-                    return Ok();
-                else
-                    return BadRequest();
+                return NotFound("Không tìm thấy Id");
             }
-            catch (Exception ex)
+            var delete = _statusRoomRepository.Delete(id);
+            if (delete)
             {
-                // Xử lý lỗi và trả về lỗi phù hợp
-                return StatusCode(500, ex.Message);
+                return Ok("Xóa thành công");
             }
+            return BadRequest("Xóa thất bại");
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            try
-            {
-                List<StatusRoom> statusRooms = _statusRoomRepository.GetAll();
-                return Ok(statusRooms);
-            }
-            catch (Exception ex)
-            {
-                // Xử lý lỗi và trả về lỗi phù hợp
-                return StatusCode(500, ex.Message);
-            }
-        }
+
     }
 }

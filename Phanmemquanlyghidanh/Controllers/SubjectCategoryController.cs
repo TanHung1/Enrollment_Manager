@@ -28,48 +28,41 @@ namespace Phanmemquanlyghidanh.Controllers
             var subjectCategory = _subjectCategoryRepository.GetById(id);
             if (subjectCategory == null)
             {
-                return NotFound();
+                return NotFound("Không tìm thấy Id cần tìm");
             }
             return Ok(subjectCategory);
         }
-
+        [HttpGet("search/{name}")]
+        public IActionResult SearchByName(string name)
+        {
+            var SearchResults = _subjectCategoryRepository.SearchByName(name);
+            if (!SearchResults.Any())
+            {
+                return NotFound("Không tìm thấy loại điểm");
+            }
+            return Ok(SearchResults);
+        }
         [HttpPost]
         public IActionResult Create(SubjectCategory subjectCategory)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return BadRequest();
+                _subjectCategoryRepository.Create(subjectCategory);
+                return Ok("Tạo thành công");
             }
-            var created = _subjectCategoryRepository.Create(subjectCategory);
-            if (created)
-            {
-                return CreatedAtAction(nameof(GetById), new { id = subjectCategory.SubjectCategory_Id }, subjectCategory);
-            }
-            return StatusCode(500);
+            return BadRequest("Tạo thất bại");
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, SubjectCategory subjectCategory)
         {
-            if (!ModelState.IsValid)
+            subjectCategory.SubjectCategoryId = id;
+            var result = _subjectCategoryRepository.Update(subjectCategory);
+            if (result)
             {
-                return BadRequest();
+                return Ok("Cập nhật thành công");
             }
-            if (id != subjectCategory.SubjectCategory_Id)
-            {
-                return BadRequest();
-            }
-            var existingSubjectCategory = _subjectCategoryRepository.GetById(id);
-            if (existingSubjectCategory == null)
-            {
-                return NotFound();
-            }
-            var updated = _subjectCategoryRepository.Update(subjectCategory);
-            if (updated)
-            {
-                return NoContent();
-            }
-            return StatusCode(500);
+            return BadRequest("Cập nhật thất bại");
         }
 
         [HttpDelete("{id}")]
@@ -78,14 +71,14 @@ namespace Phanmemquanlyghidanh.Controllers
             var existingSubjectCategory = _subjectCategoryRepository.GetById(id);
             if (existingSubjectCategory == null)
             {
-                return NotFound();
+                return NotFound("Không tìm thấy Id cần xóa");
             }
             var deleted = _subjectCategoryRepository.Delete(id);
             if (deleted)
             {
-                return NoContent();
+                return Ok("Xóa thành công");
             }
-            return StatusCode(500);
+            return BadRequest("Xóa thất bại");
         }
     }
 }

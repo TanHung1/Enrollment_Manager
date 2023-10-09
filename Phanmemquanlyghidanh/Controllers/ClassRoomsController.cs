@@ -28,48 +28,58 @@ namespace Phanmemquanlyghidanh.Controllers
 
             if (classRoom == null)
             {
-                return NotFound();
+                return NotFound("Không có phòng học cần tìm");
             }
 
             return classRoom;
         }
-
+        [HttpGet("search/{name}")]
+        public IActionResult SearchByName(string name)
+        {
+            var SearchResults = _classRoomRepository.SearchByName(name);
+            if (!SearchResults.Any())
+            {
+                return NotFound("Không tìm thấy loại điểm");
+            }
+            return Ok(SearchResults);
+        }
         [HttpPost]
         public ActionResult<ClassRoom> CreateClassRoom(ClassRoom classRoom)
         {
-            if (_classRoomRepository.Create(classRoom))
+            if (ModelState.IsValid)
             {
-                return CreatedAtAction(nameof(GetClassRoom), new { id = classRoom.ClassRoom_Id }, classRoom);
+                _classRoomRepository.Create(classRoom);
+                return Ok("Tạo thành công");
             }
-
-            return BadRequest();
+            return BadRequest("Tạo thất bại");
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateClassRoom(int id, ClassRoom classRoom)
         {
-            if (id != classRoom.ClassRoom_Id)
+            classRoom.ClassRoom_Id = id;
+            var result = _classRoomRepository.Update(classRoom);
+            if (result)
             {
-                return BadRequest();
+                return Ok("Cập nhật thành công");
             }
-
-            if (_classRoomRepository.Update(classRoom))
-            {
-                return NoContent();
-            }
-
-            return NotFound();
+            return BadRequest("Cập nhật thất bại");
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteClassRoom(int id)
         {
-            if (_classRoomRepository.Delete(id))
+            var result = _classRoomRepository.GetClassRoom(id);
+            if (result == null)
             {
-                return NoContent();
+                return NotFound("Không tìm thấy Id cần xóa");
             }
-
-            return NotFound();
+            var delete = _classRoomRepository.Delete(id);
+            if (delete)
+            {
+                return Ok("Xóa thành công");
+            }
+            return BadRequest("Xóa thất bại");
         }
     }
 }

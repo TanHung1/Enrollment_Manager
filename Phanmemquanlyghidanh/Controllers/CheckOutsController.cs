@@ -37,39 +37,41 @@ namespace Phanmemquanlyghidanh.Controllers
         [HttpPost]
         public ActionResult<CheckOut> CreateCheckOut(CheckOut checkOut)
         {
-            if (_checkOutRepository.CreateCheckOut(checkOut))
+            if (ModelState.IsValid)
             {
-                return CreatedAtAction(nameof(GetCheckOut), new { id = checkOut.CheckOut_Id }, checkOut);
+                _checkOutRepository.CreateCheckOut(checkOut);
+                return Ok("Tạo thành công");
             }
-
-            return BadRequest();
+            return BadRequest("Tạo thất bại");
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateCheckOut(int id, CheckOut checkOut)
         {
-            if (id != checkOut.CheckOut_Id)
+            checkOut.CheckOut_Id = id;
+            var result = _checkOutRepository.UpdateCheckOut(checkOut);
+            if (result)
             {
-                return BadRequest();
+                return Ok("Cập nhật thành công");
             }
-
-            if (_checkOutRepository.UpdateCheckOut(checkOut))
-            {
-                return NoContent();
-            }
-
-            return NotFound();
+            return BadRequest("Cập nhật thất bại");
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteCheckOut(int id)
         {
-            if (_checkOutRepository.DeleteCheckOut(id))
+            var result = _checkOutRepository.GetCheckOutById(id);
+            if (result == null)
             {
-                return NoContent();
+                return NotFound("Không tìm thấy Id cần xóa");
             }
+            var delete = _checkOutRepository.DeleteCheckOut(id);
+            if (delete)
+            {
+                return Ok("Xóa thành công");
+            }
+            return BadRequest("Xóa thất bại");
 
-            return NotFound();
         }
     }
 }

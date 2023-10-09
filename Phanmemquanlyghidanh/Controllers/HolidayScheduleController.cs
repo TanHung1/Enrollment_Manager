@@ -28,18 +28,27 @@ namespace Phanmemquanlyghidanh.Controllers
             var holidaySchedule = _holidayScheduleRepository.GetHolidaySchedule(id);
             if (holidaySchedule == null)
             {
-                return NotFound();
+                return NotFound("Không tìm thấy lịch nghỉ");
             }
             return Ok(holidaySchedule);
         }
-
+        [HttpGet("search/{name}")]
+        public IActionResult SearchByName(string name)
+        {
+            var SearchResults = _holidayScheduleRepository.SearchByName(name);
+            if (!SearchResults.Any())
+            {
+                return NotFound("Không tìm thấy loại điểm");
+            }
+            return Ok(SearchResults);
+        }
         [HttpPost]
         public IActionResult Create(HolidaySchedule holidaySchedule)
         {
             if (ModelState.IsValid)
             {
                 _holidayScheduleRepository.Create(holidaySchedule);
-                return Ok();
+                return Ok("Tạo thời khóa biểu thành công");
             }
             return BadRequest(ModelState);
         }
@@ -47,36 +56,29 @@ namespace Phanmemquanlyghidanh.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, HolidaySchedule holidaySchedule)
         {
-            if (id != holidaySchedule.HolidayId)
+            holidaySchedule.HolidayId = id;
+            var result = _holidayScheduleRepository.Update(holidaySchedule);
+            if (result)
             {
-                return BadRequest();
+                return Ok("Cập nhật thành công");
             }
-
-            var existingHolidaySchedule = _holidayScheduleRepository.GetHolidaySchedule(id);
-            if (existingHolidaySchedule == null)
-            {
-                return NotFound();
-            }
-
-            existingHolidaySchedule.NameHoliday = holidaySchedule.NameHoliday;
-            existingHolidaySchedule.StartDay = holidaySchedule.StartDay;
-            existingHolidaySchedule.EndDate = holidaySchedule.EndDate;
-
-            _holidayScheduleRepository.Update(existingHolidaySchedule);
-            return Ok();
+            return BadRequest("Cập nhật thất bại");
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var existingHolidaySchedule = _holidayScheduleRepository.GetHolidaySchedule(id);
-            if (existingHolidaySchedule == null)
+            var result = _holidayScheduleRepository.GetHolidaySchedule(id);
+            if (result == null)
             {
-                return NotFound();
+                return NotFound("Không tìm thấy Id cần xóa");
             }
-
-            _holidayScheduleRepository.Delete(id);
-            return Ok();
+            var delete = _holidayScheduleRepository.Delete(id);
+            if (delete)
+            {
+                return Ok("Xóa thành công");
+            }
+            return BadRequest("Xóa thất bại");
         }
     }
 }

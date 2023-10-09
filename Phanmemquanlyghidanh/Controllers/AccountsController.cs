@@ -38,6 +38,33 @@ namespace Phanmemquanlyghidanh.Controllers
             return account;
         }
 
+        [HttpGet("search/{name}")]
+        public IActionResult SearchByName(string name)
+        {
+            var SearchResult = _accountRepository.SearchByName(name);
+            if (!SearchResult.Any())
+            {
+                return NotFound("Không tìm thấy");
+            }
+            return Ok(SearchResult);
+        }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(Account account)
+        {
+            var Register = await _accountRepository.Register(account);
+            return Ok(Register);
+        }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            var account = await _accountRepository.Login(email, password);
+            if (account == null)
+            {
+                return Unauthorized();
+            }
+            return Ok(account);
+        }
+
         // POST: api/Accounts
         [HttpPost]
         public ActionResult<Account> CreateAccount(Account account)
@@ -79,27 +106,5 @@ namespace Phanmemquanlyghidanh.Controllers
             return NotFound();
         }
 
-        [HttpPost("Login")]
-        public IActionResult Login(Account account)
-        {
-            bool success = _accountRepository.Login(account.Email, account.Password);
-            if (success)
-            {
-                return Ok("Thanh cong");
-            }
-            return BadRequest("Đăng nhập thất bại, tài khoản hoặc mật khẩu không đúng");
-        }
-
-        [HttpPost("Register")]
-        public IActionResult Register(Account account)
-        {
-            bool register = _accountRepository.Register(account.Email, account.Password);
-            if (register)
-            {
-                return Ok("Đăng ký thành công");
-
-            }
-            return BadRequest("Đăng ký thất bại, Email đã tồn tại");
-        }
     }
 }

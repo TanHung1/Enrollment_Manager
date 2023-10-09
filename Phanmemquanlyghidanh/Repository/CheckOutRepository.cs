@@ -24,14 +24,14 @@ namespace Phanmemquanlyghidanh.Repository
 
         public bool CreateCheckOut(CheckOut checkOut)
         {
-            _dbContext.CheckOutRooms.Add(checkOut);
+            _dbContext.CheckOuts.Add(checkOut);
             _dbContext.SaveChanges();
             return true;
         }
 
         public bool DeleteCheckOut(int Id)
         {
-            CheckOut checkOut = _dbContext.CheckOutRooms.FirstOrDefault(x => x.CheckOut_Id == Id);
+            CheckOut checkOut = _dbContext.CheckOuts.FirstOrDefault(x => x.CheckOut_Id == Id);
             _dbContext.Remove(checkOut);
             _dbContext.SaveChanges();
             return true;
@@ -39,18 +39,18 @@ namespace Phanmemquanlyghidanh.Repository
 
         public List<CheckOut> GetAll()
         {
-            return _dbContext.CheckOutRooms.ToList();
+            return _dbContext.CheckOuts.ToList();
         }
 
         public CheckOut GetCheckOutById(int Id)
         {
-            CheckOut checkOut = _dbContext.CheckOutRooms.FirstOrDefault(x => x.CheckOut_Id == Id);
+            CheckOut checkOut = _dbContext.CheckOuts.FirstOrDefault(x => x.CheckOut_Id == Id);
             return checkOut;
         }
 
         public bool UpdateCheckOut(CheckOut checkOut)
         {
-            CheckOut co = _dbContext.CheckOutRooms.FirstOrDefault(x => x.CheckOut_Id == checkOut.CheckOut_Id);
+            CheckOut co = _dbContext.CheckOuts.FirstOrDefault(x => x.CheckOut_Id == checkOut.CheckOut_Id);
             if (co != null)
             {
                 _dbContext.Entry(co).CurrentValues.SetValues(checkOut);

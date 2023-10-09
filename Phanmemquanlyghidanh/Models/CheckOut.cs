@@ -9,6 +9,7 @@ namespace Phanmemquanlyghidanh.Models
 
         public string CheckOut_Name { get; set; }
 
+
         public string FeeType { get; set; }
 
         public string Note { get; set; }

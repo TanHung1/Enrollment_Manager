@@ -10,8 +10,9 @@ namespace Phanmemquanlyghidanh.Repository
         public bool Delete(int id);
         public bool Update(TypeMark typemark);
 
-        public TypeMark GetMark(int id);
+        public TypeMark GetMarkId(int id);
 
+        public List<TypeMark> SearchByName(string name);
 
     }
     public class TypeMarkRepository : ITypeMarkRepository
@@ -38,15 +39,22 @@ namespace Phanmemquanlyghidanh.Repository
             return true;
         }
 
-        public TypeMark GetMark(int id)
+        public TypeMark GetMarkId(int id)
         {
             TypeMark tm = _dbcontext.TypeMarks.FirstOrDefault(x => x.TypeID == id);
             return tm;
         }
 
+
+
         public List<TypeMark> GetMarkList()
         {
             return _dbcontext.TypeMarks.ToList();
+        }
+
+        public List<TypeMark> SearchByName(string name)
+        {
+            return _dbcontext.TypeMarks.Where(x => x.TypeName.Contains(name)).ToList();
         }
 
         public bool Update(TypeMark typemark)

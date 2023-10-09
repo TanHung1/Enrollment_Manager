@@ -17,7 +17,7 @@ namespace Phanmemquanlyghidanh.Models
 
         public string Contact { get; set; }
 
-        public virtual ICollection<ClassRoom> ClassRooms { get; set; } = new List<ClassRoom>();
+        public ICollection<ClassRoom> ClassRooms { get; set; }
 
     }
 }

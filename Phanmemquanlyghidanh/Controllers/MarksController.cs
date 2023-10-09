@@ -28,7 +28,7 @@ namespace Phanmemquanlyghidanh.Controllers
 
             if (mark == null)
             {
-                return NotFound();
+                return NotFound("Không tìm thấy!");
             }
 
             return mark;
@@ -37,39 +37,41 @@ namespace Phanmemquanlyghidanh.Controllers
         [HttpPost]
         public ActionResult<Mark> CreateMark(Mark mark)
         {
-            if (_markRepository.Create(mark))
+            if (ModelState.IsValid)
             {
-                return CreatedAtAction(nameof(GetMark), new { id = mark.MarkId }, mark);
+                _markRepository.Create(mark);
+                return Ok("Tạo thành công");
             }
-
-            return BadRequest();
+            return BadRequest("Tạo thất bại");
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateMark(int id, Mark mark)
         {
-            if (id != mark.MarkId)
+            mark.MarkId = id;
+            var markRepository = _markRepository.Update(mark);
+            if (markRepository)
             {
-                return BadRequest();
+                return Ok("Cập nhật thành công");
             }
-
-            if (_markRepository.Update(mark))
-            {
-                return NoContent();
-            }
-
-            return NotFound();
+            return BadRequest("Cập nhật thất bại");
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteMark(int id)
         {
-            if (_markRepository.Delete(id))
+            var result = _markRepository.Get1Mark(id);
+            if (result == null)
             {
-                return NoContent();
-            }
+                return NotFound("Không tìm thấy Id");
 
-            return NotFound();
+            }
+            var delete = _markRepository.Delete(id);
+            if (delete)
+            {
+                return Ok("Xóa thành công");
+            }
+            return BadRequest("Xóa thất bại ");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Phanmemquanlyghidanh.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Phanmemquanlyghidanh.Models;
 
 namespace Phanmemquanlyghidanh.Repository
 {
@@ -11,8 +12,11 @@ namespace Phanmemquanlyghidanh.Repository
         public bool DeleteAccount(int Id);
         public Account GetAccountById(int id);
 
-        public bool Register(string email, string password);
-        public bool Login(string email, string password);
+        public List<Account> SearchByName(string name);
+        public Task<Account> Register(Account account);
+
+        public Task<Account> Login(string email, string password);
+
     }
     public class AccountRepository : IAccountRepository
     {
@@ -49,26 +53,24 @@ namespace Phanmemquanlyghidanh.Repository
 
         }
 
-        public bool Login(string email, string password)
+
+
+        public async Task<Account> Login(string email, string password)
         {
-            var account = _dbContext.Accounts.FirstOrDefault(x => x.Email == email && x.Password == password);
-            if (account != null)
-            {
-                return true;
-            }
-            return false;
+            var account = await _dbContext.Accounts.FirstOrDefaultAsync(a => a.Email == email && a.Password == password);
+            return account;
         }
 
-        public bool Register(string email, string password)
+        public async Task<Account> Register(Account account)
         {
-            if (_dbContext.Accounts.Any(x => x.Email == email))
-            {
-                return false;
-            }
-            var account = new Account { Email = email, Password = password };
-            _dbContext.Accounts.Add(account);
-            _dbContext.SaveChanges();
-            return true;
+            await _dbContext.Accounts.AddAsync(account);
+            await _dbContext.SaveChangesAsync();
+            return account;
+        }
+
+        public List<Account> SearchByName(string name)
+        {
+            return _dbContext.Accounts.Where(x => x.LastName.Contains(name)).ToList();
         }
 
         public bool UpdateAccount(Account account)

@@ -18,9 +18,13 @@ namespace Phanmemquanlyghidanh.Models
 
         public decimal FinalExamPoint1 { get; set; }
         public decimal FinalExamPoint2 { get; set; }
-
         public decimal AverageColumnPoint { get; set; }
+        public int TypeID { get; set; }
 
-        public virtual ICollection<Subject> Subjects { get; set; } = new List<Subject>();
+        public int SubjectId { get; set; }
+
+        public int Id { get; set; }
+
+
     }
 }

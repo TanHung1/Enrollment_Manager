@@ -33,7 +33,16 @@ namespace Phanmemquanlyghidanh.Controllers
 
             return role;
         }
-
+        [HttpGet("search/{name}")]
+        public IActionResult SearchByName(string name)
+        {
+            var SearchResults = _roleRepository.SearchByName(name);
+            if (!SearchResults.Any())
+            {
+                return NotFound("Không tìm thấy loại điểm");
+            }
+            return Ok(SearchResults);
+        }
         [HttpPost]
         public ActionResult<Role> CreateRole(Role role)
         {

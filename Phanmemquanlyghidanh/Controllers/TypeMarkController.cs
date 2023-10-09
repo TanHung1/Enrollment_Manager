@@ -24,22 +24,33 @@ namespace YourNamespace.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var typeMark = _typeMarkRepository.GetMark(id);
+            var typeMark = _typeMarkRepository.GetMarkId(id);
             if (typeMark == null)
             {
-                return NotFound();
+                return NotFound("không tìm thấy loại điểm");
             }
             return Ok(typeMark);
         }
 
+        [HttpGet("search/{name}")]
+        public IActionResult SearchByName(string name)
+        {
+            var SearchResults = _typeMarkRepository.SearchByName(name);
+            if (!SearchResults.Any())
+            {
+                return NotFound("Không tìm thấy loại điểm");
+            }
+            return Ok(SearchResults);
+        }
         [HttpPost]
         public IActionResult Create(TypeMark typemark)
         {
-            var result = _typeMarkRepository.Create(typemark);
-            if (result)
-                return Ok();
-            else
-                return BadRequest();
+            if (ModelState.IsValid)
+            {
+                _typeMarkRepository.Create(typemark);
+                return Ok("Tạo loại điểm thành công");
+            }
+            return BadRequest("Tạo thất bại");
         }
 
         [HttpPut("{id}")]
@@ -48,19 +59,26 @@ namespace YourNamespace.Controllers
             typemark.TypeID = id;
             var result = _typeMarkRepository.Update(typemark);
             if (result)
-                return Ok();
+                return Ok("Cập nhật thành công");
             else
-                return BadRequest();
+                return BadRequest("Cập nhật thất bại");
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var result = _typeMarkRepository.Delete(id);
-            if (result)
-                return Ok();
-            else
-                return BadRequest();
+            var result = _typeMarkRepository.GetMarkId(id);
+            if (result == null)
+            {
+                return NotFound("Không tìm thấy Id cần xóa");
+            }
+            var delete = _typeMarkRepository.Delete(id);
+            if (delete)
+            {
+                return Ok("Xóa thành công");
+            }
+            return BadRequest("Xóa thất bại");
+
         }
     }
 }

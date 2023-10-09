@@ -9,6 +9,6 @@ namespace Phanmemquanlyghidanh.Models
 
         public string StatusRoom_Name { get; set; }
 
-        public virtual ICollection<ClassRoom> Classrooms { get; set; }
+        public ICollection<ClassRoom> Classrooms { get; set; }
     }
 }

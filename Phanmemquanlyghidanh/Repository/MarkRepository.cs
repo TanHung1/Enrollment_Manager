@@ -9,6 +9,7 @@ namespace Phanmemquanlyghidanh.Repository
         public bool Update(Mark mark);
         public bool Delete(int Id);
 
+
         public List<Mark> GetAll();
         public Mark Get1Mark(int id);
     }
@@ -45,6 +46,8 @@ namespace Phanmemquanlyghidanh.Repository
         {
             return _dbContext.Marks.ToList();
         }
+
+
 
         public bool Update(Mark mark)
         {

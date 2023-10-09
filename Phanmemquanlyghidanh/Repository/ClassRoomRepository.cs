@@ -9,7 +9,7 @@ namespace Phanmemquanlyghidanh.Repository
         public bool Delete(int Id);
 
         public List<ClassRoom> GetAll();
-
+        public List<ClassRoom> SearchByName(string name);
         public ClassRoom GetClassRoom(int id);
     }
     public class ClassRoomRepository : IClassRoomRepository
@@ -44,6 +44,11 @@ namespace Phanmemquanlyghidanh.Repository
         {
             ClassRoom CR = _dbContext.ClassRooms.FirstOrDefault(x => x.ClassRoom_Id == id);
             return CR;
+        }
+
+        public List<ClassRoom> SearchByName(string name)
+        {
+            return _dbContext.ClassRooms.Where(x => x.ClassRoom_Name.Contains(name)).ToList();
         }
 
         public bool Update(ClassRoom room)
