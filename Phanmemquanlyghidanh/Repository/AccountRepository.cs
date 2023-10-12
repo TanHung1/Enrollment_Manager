@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Phanmemquanlyghidanh.Models;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Phanmemquanlyghidanh.Repository
 {
@@ -28,6 +30,8 @@ namespace Phanmemquanlyghidanh.Repository
         }
         public bool CreateAccount(Account account)
         {
+            string hashedPassword = HashPassword(account.Password);
+            account.Password = hashedPassword;
             _dbContext.Accounts.Add(account);
             _dbContext.SaveChanges();
             return true;
@@ -63,6 +67,8 @@ namespace Phanmemquanlyghidanh.Repository
 
         public async Task<Account> Register(Account account)
         {
+            string hashedPassword = HashPassword(account.Password);
+            account.Password = hashedPassword;
             await _dbContext.Accounts.AddAsync(account);
             await _dbContext.SaveChangesAsync();
             return account;
@@ -82,6 +88,20 @@ namespace Phanmemquanlyghidanh.Repository
                 _dbContext.SaveChanges();
             }
             return true;
+        }
+
+        private static string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < hashedBytes.Length; i++)
+                {
+                    builder.Append(hashedBytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
     }
 }

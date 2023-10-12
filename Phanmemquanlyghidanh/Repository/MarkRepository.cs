@@ -8,10 +8,10 @@ namespace Phanmemquanlyghidanh.Repository
 
         public bool Update(Mark mark);
         public bool Delete(int Id);
-
-
         public List<Mark> GetAll();
         public Mark Get1Mark(int id);
+
+        public decimal CalculateAverageColumnPoint(Mark mark);
     }
     public class MarkRepository : IMarkRepository
     {
@@ -21,6 +21,14 @@ namespace Phanmemquanlyghidanh.Repository
         {
             _dbContext = dbContext;
         }
+
+        public decimal CalculateAverageColumnPoint(Mark mark)
+        {
+            decimal averageColumnPoint = (mark.FirstColumnPoint + mark.SecondColumnPoint + mark.ThirdColumnPoint
+                + mark.FourthColumnPoint + (mark.FinalExamPoint1 * 2) + (mark.FinalExamPoint2 * 2)) / 8;
+            return averageColumnPoint;
+        }
+
         public bool Create(Mark mark)
         {
             _dbContext.Marks.Add(mark);
@@ -47,8 +55,6 @@ namespace Phanmemquanlyghidanh.Repository
             return _dbContext.Marks.ToList();
         }
 
-
-
         public bool Update(Mark mark)
         {
             Mark m = _dbContext.Marks.FirstOrDefault(x => x.MarkId == mark.MarkId);
@@ -59,5 +65,7 @@ namespace Phanmemquanlyghidanh.Repository
             }
             return true;
         }
+
+
     }
 }

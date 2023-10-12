@@ -39,6 +39,7 @@ namespace Phanmemquanlyghidanh.Controllers
         {
             if (ModelState.IsValid)
             {
+                mark.AverageColumnPoint = _markRepository.CalculateAverageColumnPoint(mark);
                 _markRepository.Create(mark);
                 return Ok("Tạo thành công");
             }
@@ -49,6 +50,7 @@ namespace Phanmemquanlyghidanh.Controllers
         public IActionResult UpdateMark(int id, Mark mark)
         {
             mark.MarkId = id;
+            mark.AverageColumnPoint = _markRepository.CalculateAverageColumnPoint(mark);
             var markRepository = _markRepository.Update(mark);
             if (markRepository)
             {
@@ -73,5 +75,7 @@ namespace Phanmemquanlyghidanh.Controllers
             }
             return BadRequest("Xóa thất bại ");
         }
+
+
     }
 }
