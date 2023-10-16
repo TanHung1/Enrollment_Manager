@@ -17,7 +17,7 @@ namespace Phanmemquanlyghidanh.Models
         public string Price { get; set; }
 
 
-
+        public int StatusCheckOutId { get; set; }
         public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 
         public virtual ICollection<ClassRoom> ClassRooms { get; set; } = new List<ClassRoom>();
