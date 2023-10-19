@@ -32,6 +32,7 @@ namespace Phanmemquanlyghidanh.Repository
         {
             string hashedPassword = HashPassword(account.Password);
             account.Password = hashedPassword;
+            //account.RoleId = 3;
             _dbContext.Accounts.Add(account);
             _dbContext.SaveChanges();
             return true;
@@ -39,7 +40,7 @@ namespace Phanmemquanlyghidanh.Repository
 
         public bool DeleteAccount(int Id)
         {
-            Account acc = _dbContext.Accounts.FirstOrDefault(x => x.Id == Id);
+            Account acc = _dbContext.Accounts.FirstOrDefault(x => x.AccountId == Id);
             _dbContext.Remove(acc);
             _dbContext.SaveChanges();
             return true;
@@ -47,7 +48,7 @@ namespace Phanmemquanlyghidanh.Repository
 
         public Account GetAccountById(int id)
         {
-            Account acc = _dbContext.Accounts.FirstOrDefault(x => x.Id == id);
+            Account acc = _dbContext.Accounts.FirstOrDefault(x => x.AccountId == id);
             return acc;
         }
 
@@ -69,6 +70,7 @@ namespace Phanmemquanlyghidanh.Repository
         {
             string hashedPassword = HashPassword(account.Password);
             account.Password = hashedPassword;
+            //account.RoleId = 3;
             await _dbContext.Accounts.AddAsync(account);
             await _dbContext.SaveChangesAsync();
             return account;
@@ -81,7 +83,7 @@ namespace Phanmemquanlyghidanh.Repository
 
         public bool UpdateAccount(Account account)
         {
-            Account acc = _dbContext.Accounts.FirstOrDefault(x => x.Id == account.Id);
+            Account acc = _dbContext.Accounts.FirstOrDefault(x => x.AccountId == account.AccountId);
             if (acc != null)
             {
                 _dbContext.Entry(acc).CurrentValues.SetValues(account);

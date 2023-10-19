@@ -31,7 +31,7 @@ namespace Phanmemquanlyghidanh.Repository
 
         public bool Delete(int Id)
         {
-            Schedule schedule = _dbContext.Schedules.FirstOrDefault(x => x.Schedule_Id == Id);
+            Schedule schedule = _dbContext.Schedules.FirstOrDefault(x => x.ScheduleId == Id);
             _dbContext.Schedules.Remove(schedule);
             _dbContext.SaveChanges();
             return true;
@@ -44,7 +44,7 @@ namespace Phanmemquanlyghidanh.Repository
 
         public Schedule GetById(int id)
         {
-            Schedule schedule = _dbContext.Schedules.FirstOrDefault(x => x.Schedule_Id == id);
+            Schedule schedule = _dbContext.Schedules.FirstOrDefault(x => x.ScheduleId == id);
             return schedule;
         }
 
@@ -55,7 +55,7 @@ namespace Phanmemquanlyghidanh.Repository
 
         public bool Update(Schedule schedule)
         {
-            Schedule schedule1 = _dbContext.Schedules.FirstOrDefault(x => x.Schedule_Id == schedule.Schedule_Id);
+            Schedule schedule1 = _dbContext.Schedules.FirstOrDefault(x => x.ScheduleId == schedule.ScheduleId);
             if (schedule1 != null)
             {
                 _dbContext.Entry(schedule1).CurrentValues.SetValues(schedule);

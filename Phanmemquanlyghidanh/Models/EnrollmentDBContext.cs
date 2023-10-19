@@ -37,7 +37,7 @@ namespace Phanmemquanlyghidanh.Models
         public DbSet<Role> Roles { get; set; }
 
         public DbSet<Course> Courses { get; set; }
-        public DbSet<StatusCheckOut> StatusCheckouts { get; set; }
+
         public DbSet<HolidaySchedule> HolidaySchedules { get; set; }
     }
 }

@@ -5,7 +5,7 @@ namespace Phanmemquanlyghidanh.Models
     public class Schedule
     {
         [Key]
-        public int Schedule_Id { get; set; }
+        public int ScheduleId { get; set; }
 
         public string Schedule_Name { get; set; }
 

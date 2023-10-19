@@ -31,7 +31,7 @@ namespace Phanmemquanlyghidanh.Repository
 
         public bool Delete(int Id)
         {
-            Course course = _dbcontext.Courses.FirstOrDefault(x => x.Course_Id == Id);
+            Course course = _dbcontext.Courses.FirstOrDefault(x => x.CourseId == Id);
             _dbcontext.Remove(course);
             _dbcontext.SaveChanges();
             return true;
@@ -44,18 +44,18 @@ namespace Phanmemquanlyghidanh.Repository
 
         public Course GetById(int Id)
         {
-            Course course = _dbcontext.Courses.FirstOrDefault(x => x.Course_Id == Id);
+            Course course = _dbcontext.Courses.FirstOrDefault(x => x.CourseId == Id);
             return course;
         }
 
         public List<Course> SearchByName(string name)
         {
-            return _dbcontext.Courses.Where(x => x.Course_Name.Contains(name)).ToList();
+            return _dbcontext.Courses.Where(x => x.CourseName.Contains(name)).ToList();
         }
 
         public bool Update(Course course)
         {
-            Course cs = _dbcontext.Courses.FirstOrDefault(x => x.Course_Id == course.Course_Id);
+            Course cs = _dbcontext.Courses.FirstOrDefault(x => x.CourseId == course.CourseId);
             if (cs != null)
             {
                 _dbcontext.Entry(cs).CurrentValues.SetValues(course);

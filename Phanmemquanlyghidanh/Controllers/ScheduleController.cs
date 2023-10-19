@@ -57,7 +57,7 @@ namespace Phanmemquanlyghidanh.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, Schedule schedule)
         {
-            schedule.Schedule_Id = id;
+            schedule.ScheduleId = id;
             var result = _scheduleRepository.Update(schedule);
             if (result)
             {

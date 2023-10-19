@@ -11,33 +11,17 @@ namespace Phanmemquanlyghidanh.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CheckOuts",
-                columns: table => new
-                {
-                    CheckOut_Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CheckOut_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FeeType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CheckOuts", x => x.CheckOut_Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Courses",
                 columns: table => new
                 {
-                    Course_Id = table.Column<int>(type: "int", nullable: false)
+                    CourseId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Couse_Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Course_Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CouseCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Courses", x => x.Course_Id);
+                    table.PrimaryKey("PK_Courses", x => x.CourseId);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,7 +57,7 @@ namespace Phanmemquanlyghidanh.Migrations
                 name: "Schedules",
                 columns: table => new
                 {
-                    Schedule_Id = table.Column<int>(type: "int", nullable: false)
+                    ScheduleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Schedule_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Day = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -83,20 +67,33 @@ namespace Phanmemquanlyghidanh.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Schedules", x => x.Schedule_Id);
+                    table.PrimaryKey("PK_Schedules", x => x.ScheduleId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StatusCheckouts",
+                columns: table => new
+                {
+                    StatusCheckOutId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StatusCheckOutName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StatusCheckouts", x => x.StatusCheckOutId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "StatusRooms",
                 columns: table => new
                 {
-                    StatusRoom_Id = table.Column<int>(type: "int", nullable: false)
+                    StatusRoomId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StatusRoom_Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StatusRooms", x => x.StatusRoom_Id);
+                    table.PrimaryKey("PK_StatusRooms", x => x.StatusRoomId);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,7 +127,7 @@ namespace Phanmemquanlyghidanh.Migrations
                 name: "Accounts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    AccountId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -145,17 +142,11 @@ namespace Phanmemquanlyghidanh.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CooperationDay = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CheckOut_Id = table.Column<int>(type: "int", nullable: true),
                     RoleId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Accounts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Accounts_CheckOuts_CheckOut_Id",
-                        column: x => x.CheckOut_Id,
-                        principalTable: "CheckOuts",
-                        principalColumn: "CheckOut_Id");
+                    table.PrimaryKey("PK_Accounts", x => x.AccountId);
                     table.ForeignKey(
                         name: "FK_Accounts_Roles_RoleId",
                         column: x => x.RoleId,
@@ -170,20 +161,20 @@ namespace Phanmemquanlyghidanh.Migrations
                     SubjectId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SubjectCategoryId = table.Column<int>(type: "int", nullable: false),
-                    Course_Id = table.Column<int>(type: "int", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
                     Subject_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Level = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-
+                    Age = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Subjects", x => x.SubjectId);
                     table.ForeignKey(
-                        name: "FK_Subjects_Courses_Course_Id",
-                        column: x => x.Course_Id,
+                        name: "FK_Subjects_Courses_CourseId",
+                        column: x => x.CourseId,
                         principalTable: "Courses",
-                        principalColumn: "Course_Id");
+                        principalColumn: "CourseId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Subjects_SubjectCategories_SubjectCategoryId",
                         column: x => x.SubjectCategoryId,
@@ -207,12 +198,9 @@ namespace Phanmemquanlyghidanh.Migrations
                     NumberofStudent = table.Column<int>(type: "int", nullable: false),
                     SchoolRoom = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StatusRoom_Id = table.Column<int>(type: "int", nullable: false),
-                    Schedule_Id = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AccountId = table.Column<int>(type: "int", nullable: true),
-                    CheckOut_Id = table.Column<int>(type: "int", nullable: true),
-
+                    StatusRoomId = table.Column<int>(type: "int", nullable: false),
+                    ScheduleId = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<int>(type: "int", nullable: false),
                     SubjectId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -222,22 +210,20 @@ namespace Phanmemquanlyghidanh.Migrations
                         name: "FK_ClassRooms_Accounts_AccountId",
                         column: x => x.AccountId,
                         principalTable: "Accounts",
-                        principalColumn: "Id");
+                        principalColumn: "AccountId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClassRooms_CheckOuts_CheckOut_Id",
-                        column: x => x.CheckOut_Id,
-                        principalTable: "CheckOuts",
-                        principalColumn: "CheckOut_Id");
-                    table.ForeignKey(
-                        name: "FK_ClassRooms_Schedules_Schedule_Id",
-                        column: x => x.Schedule_Id,
+                        name: "FK_ClassRooms_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
                         principalTable: "Schedules",
-                        principalColumn: "Schedule_Id");
+                        principalColumn: "ScheduleId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClassRooms_StatusRooms_StatusRoom_Id",
-                        column: x => x.StatusRoom_Id,
+                        name: "FK_ClassRooms_StatusRooms_StatusRoomId",
+                        column: x => x.StatusRoomId,
                         principalTable: "StatusRooms",
-                        principalColumn: "StatusRoom_Id");
+                        principalColumn: "StatusRoomId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ClassRooms_Subjects_SubjectId",
                         column: x => x.SubjectId,
@@ -260,12 +246,18 @@ namespace Phanmemquanlyghidanh.Migrations
                     AverageColumnPoint = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TypeID = table.Column<int>(type: "int", nullable: false),
                     SubjectId = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<int>(type: "int", nullable: false),
                     TypeMarkTypeID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Marks", x => x.MarkId);
+                    table.ForeignKey(
+                        name: "FK_Marks_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "AccountId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Marks_Subjects_SubjectId",
                         column: x => x.SubjectId,
@@ -280,38 +272,41 @@ namespace Phanmemquanlyghidanh.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AccountMark",
+                name: "CheckOuts",
                 columns: table => new
                 {
-                    AccountsId = table.Column<int>(type: "int", nullable: false),
-                    marksMarkId = table.Column<int>(type: "int", nullable: false)
+                    CheckOutId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CheckOut_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClassRoom_Id = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<int>(type: "int", nullable: false),
+                    StatusCheckOutId = table.Column<int>(type: "int", nullable: false),
+                    FeeType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<string>(type: "nvarchar(max)", nullable: false),
+
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountMark", x => new { x.AccountsId, x.marksMarkId });
+                    table.PrimaryKey("PK_CheckOuts", x => x.CheckOutId);
                     table.ForeignKey(
-                        name: "FK_AccountMark_Accounts_AccountsId",
-                        column: x => x.AccountsId,
+                        name: "FK_CheckOuts_Accounts_AccountId",
+                        column: x => x.AccountId,
                         principalTable: "Accounts",
-                        principalColumn: "Id",
+                        principalColumn: "AccountId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AccountMark_Marks_marksMarkId",
-                        column: x => x.marksMarkId,
-                        principalTable: "Marks",
-                        principalColumn: "MarkId",
+                        name: "FK_CheckOuts_ClassRooms_ClassRoom_Id",
+                        column: x => x.ClassRoom_Id,
+                        principalTable: "ClassRooms",
+                        principalColumn: "ClassRoom_Id");
+                    table.ForeignKey(
+                        name: "FK_CheckOuts_StatusCheckouts_StatusCheckOutId",
+                        column: x => x.StatusCheckOutId,
+                        principalTable: "StatusCheckouts",
+                        principalColumn: "StatusCheckOutId",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AccountMark_marksMarkId",
-                table: "AccountMark",
-                column: "marksMarkId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Accounts_CheckOut_Id",
-                table: "Accounts",
-                column: "CheckOut_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_RoleId",
@@ -319,29 +314,44 @@ namespace Phanmemquanlyghidanh.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CheckOuts_AccountId",
+                table: "CheckOuts",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CheckOuts_ClassRoom_Id",
+                table: "CheckOuts",
+                column: "ClassRoom_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CheckOuts_StatusCheckOutId",
+                table: "CheckOuts",
+                column: "StatusCheckOutId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ClassRooms_AccountId",
                 table: "ClassRooms",
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassRooms_CheckOut_Id",
+                name: "IX_ClassRooms_ScheduleId",
                 table: "ClassRooms",
-                column: "CheckOut_Id");
+                column: "ScheduleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassRooms_Schedule_Id",
+                name: "IX_ClassRooms_StatusRoomId",
                 table: "ClassRooms",
-                column: "Schedule_Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ClassRooms_StatusRoom_Id",
-                table: "ClassRooms",
-                column: "StatusRoom_Id");
+                column: "StatusRoomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ClassRooms_SubjectId",
                 table: "ClassRooms",
                 column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Marks_AccountId",
+                table: "Marks",
+                column: "AccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Marks_SubjectId",
@@ -354,9 +364,9 @@ namespace Phanmemquanlyghidanh.Migrations
                 column: "TypeMarkTypeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subjects_Course_Id",
+                name: "IX_Subjects_CourseId",
                 table: "Subjects",
-                column: "Course_Id");
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subjects_SubjectCategoryId",
@@ -368,16 +378,22 @@ namespace Phanmemquanlyghidanh.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AccountMark");
-
-            migrationBuilder.DropTable(
-                name: "ClassRooms");
+                name: "CheckOuts");
 
             migrationBuilder.DropTable(
                 name: "HolidaySchedules");
 
             migrationBuilder.DropTable(
                 name: "Marks");
+
+            migrationBuilder.DropTable(
+                name: "ClassRooms");
+
+            migrationBuilder.DropTable(
+                name: "StatusCheckouts");
+
+            migrationBuilder.DropTable(
+                name: "TypeMarks");
 
             migrationBuilder.DropTable(
                 name: "Accounts");
@@ -390,12 +406,6 @@ namespace Phanmemquanlyghidanh.Migrations
 
             migrationBuilder.DropTable(
                 name: "Subjects");
-
-            migrationBuilder.DropTable(
-                name: "TypeMarks");
-
-            migrationBuilder.DropTable(
-                name: "CheckOuts");
 
             migrationBuilder.DropTable(
                 name: "Roles");

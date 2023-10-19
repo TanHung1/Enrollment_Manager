@@ -48,7 +48,7 @@ namespace Phanmemquanlyghidanh.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateCheckOut(int id, CheckOut checkOut)
         {
-            checkOut.CheckOut_Id = id;
+            checkOut.CheckOutId = id;
             var result = _checkOutRepository.UpdateCheckOut(checkOut);
             if (result)
             {

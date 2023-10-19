@@ -8,7 +8,7 @@ namespace Phanmemquanlyghidanh.Models
         public int SubjectId { get; set; }
 
         public int SubjectCategoryId { get; set; }
-        public int Course_Id { get; set; }
+        public int CourseId { get; set; }
 
         [Required(ErrorMessage = "Tên môn học không được để trống.")]
         public string Subject_Name { get; set; }

@@ -31,7 +31,7 @@ namespace Phanmemquanlyghidanh.Repository
 
         public bool DeleteCheckOut(int Id)
         {
-            CheckOut checkOut = _dbContext.CheckOuts.FirstOrDefault(x => x.CheckOut_Id == Id);
+            CheckOut checkOut = _dbContext.CheckOuts.FirstOrDefault(x => x.CheckOutId == Id);
             _dbContext.Remove(checkOut);
             _dbContext.SaveChanges();
             return true;
@@ -44,16 +44,28 @@ namespace Phanmemquanlyghidanh.Repository
 
         public CheckOut GetCheckOutById(int Id)
         {
-            CheckOut checkOut = _dbContext.CheckOuts.FirstOrDefault(x => x.CheckOut_Id == Id);
+            CheckOut checkOut = _dbContext.CheckOuts.FirstOrDefault(x => x.CheckOutId == Id);
             return checkOut;
         }
 
         public bool UpdateCheckOut(CheckOut checkOut)
         {
-            CheckOut co = _dbContext.CheckOuts.FirstOrDefault(x => x.CheckOut_Id == checkOut.CheckOut_Id);
+            CheckOut co = _dbContext.CheckOuts.FirstOrDefault(x => x.CheckOutId == checkOut.CheckOutId);
             if (co != null)
             {
                 _dbContext.Entry(co).CurrentValues.SetValues(checkOut);
+                if (checkOut.Price - checkOut.PricePaid == checkOut.RemainingPrice && checkOut.RemainingPrice == 0)
+                {
+                    co.StatusCheckOut = "Đã thanh toán";
+                }
+                else if (checkOut.PricePaid == 0)
+                {
+                    co.StatusCheckOut = "Chưa thanh toán";
+                }
+                else
+                {
+                    co.StatusCheckOut = "Chưa thanh toán dử";
+                }
                 _dbContext.SaveChanges();
             }
             return true;

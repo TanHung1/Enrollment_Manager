@@ -12,8 +12,8 @@ using Phanmemquanlyghidanh.Models;
 namespace Phanmemquanlyghidanh.Migrations
 {
     [DbContext(typeof(EnrollmentDBContext))]
-    [Migration("20231009062912_second")]
-    partial class second
+    [Migration("20231019020508_tuitionfees")]
+    partial class tuitionfees
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,20 +27,17 @@ namespace Phanmemquanlyghidanh.Migrations
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.Account", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AccountId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CheckOut_Id")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("CooperationDay")
                         .HasColumnType("datetime2");
@@ -72,15 +69,13 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoleId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Subject")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CheckOut_Id");
+                    b.HasKey("AccountId");
 
                     b.HasIndex("RoleId");
 
@@ -89,29 +84,47 @@ namespace Phanmemquanlyghidanh.Migrations
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.CheckOut", b =>
                 {
-                    b.Property<int>("CheckOut_Id")
+                    b.Property<int>("CheckOutId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CheckOut_Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CheckOutId"));
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CheckOut_Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FeeType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ClassRoom_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ClassRoom_Id1")
+                        .HasColumnType("int");
 
                     b.Property<string>("Note")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Price")
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PricePaid")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("RemainingPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("StatusCheckOut")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CheckOut_Id");
+                    b.HasKey("CheckOutId");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("ClassRoom_Id1");
 
                     b.ToTable("CheckOuts");
                 });
@@ -124,14 +137,11 @@ namespace Phanmemquanlyghidanh.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClassRoom_Id"));
 
-                    b.Property<int?>("AccountId")
+                    b.Property<int>("AccountId")
                         .HasColumnType("int");
 
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CheckOut_Id")
-                        .HasColumnType("int");
 
                     b.Property<string>("ClassRoom_Code")
                         .IsRequired()
@@ -144,20 +154,10 @@ namespace Phanmemquanlyghidanh.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Fee")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("NumberofStudent")
                         .HasColumnType("int");
 
-                    b.Property<int>("Schedule_Id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Schedule_Id1")
+                    b.Property<int>("ScheduleId")
                         .HasColumnType("int");
 
                     b.Property<string>("SchoolDay")
@@ -166,10 +166,7 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.Property<string>("SchoolRoom")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StatusRoom_Id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StatusRoom_Id1")
+                    b.Property<int>("StatusRoomId")
                         .HasColumnType("int");
 
                     b.Property<int?>("SubjectId")
@@ -178,15 +175,16 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.Property<string>("TimeClass")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("TuitionFee")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("ClassRoom_Id");
 
                     b.HasIndex("AccountId");
 
-                    b.HasIndex("CheckOut_Id");
+                    b.HasIndex("ScheduleId");
 
-                    b.HasIndex("Schedule_Id1");
-
-                    b.HasIndex("StatusRoom_Id1");
+                    b.HasIndex("StatusRoomId");
 
                     b.HasIndex("SubjectId");
 
@@ -195,21 +193,21 @@ namespace Phanmemquanlyghidanh.Migrations
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.Course", b =>
                 {
-                    b.Property<int>("Course_Id")
+                    b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Course_Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseId"));
 
-                    b.Property<string>("Course_Name")
+                    b.Property<string>("CourseName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Couse_Code")
+                    b.Property<string>("CouseCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Course_Id");
+                    b.HasKey("CourseId");
 
                     b.ToTable("Courses");
                 });
@@ -248,7 +246,7 @@ namespace Phanmemquanlyghidanh.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MarkId"));
 
-                    b.Property<int?>("AccountId")
+                    b.Property<int>("AccountId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("AverageColumnPoint")
@@ -265,9 +263,6 @@ namespace Phanmemquanlyghidanh.Migrations
 
                     b.Property<decimal>("FourthColumnPoint")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("SecondColumnPoint")
                         .HasColumnType("decimal(18,2)");
@@ -314,11 +309,11 @@ namespace Phanmemquanlyghidanh.Migrations
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.Schedule", b =>
                 {
-                    b.Property<int>("Schedule_Id")
+                    b.Property<int>("ScheduleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Schedule_Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ScheduleId"));
 
                     b.Property<string>("Contact")
                         .IsRequired()
@@ -338,24 +333,24 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.Property<DateTime>("TimeStart")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Schedule_Id");
+                    b.HasKey("ScheduleId");
 
                     b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.StatusRoom", b =>
                 {
-                    b.Property<int>("StatusRoom_Id")
+                    b.Property<int>("StatusRoomId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusRoom_Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusRoomId"));
 
                     b.Property<string>("StatusRoom_Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StatusRoom_Id");
+                    b.HasKey("StatusRoomId");
 
                     b.ToTable("StatusRooms");
                 });
@@ -371,10 +366,7 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("Course_Id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Course_Id1")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<string>("Level")
@@ -390,7 +382,7 @@ namespace Phanmemquanlyghidanh.Migrations
 
                     b.HasKey("SubjectId");
 
-                    b.HasIndex("Course_Id1");
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("SubjectCategoryId");
 
@@ -437,32 +429,45 @@ namespace Phanmemquanlyghidanh.Migrations
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.Account", b =>
                 {
-                    b.HasOne("Phanmemquanlyghidanh.Models.CheckOut", null)
-                        .WithMany("Accounts")
-                        .HasForeignKey("CheckOut_Id");
-
                     b.HasOne("Phanmemquanlyghidanh.Models.Role", null)
                         .WithMany("Accounts")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Phanmemquanlyghidanh.Models.CheckOut", b =>
+                {
+                    b.HasOne("Phanmemquanlyghidanh.Models.Account", null)
+                        .WithMany("checkouts")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Phanmemquanlyghidanh.Models.ClassRoom", null)
+                        .WithMany("checkOuts")
+                        .HasForeignKey("ClassRoom_Id1");
                 });
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.ClassRoom", b =>
                 {
                     b.HasOne("Phanmemquanlyghidanh.Models.Account", null)
                         .WithMany("ClassRooms")
-                        .HasForeignKey("AccountId");
-
-                    b.HasOne("Phanmemquanlyghidanh.Models.CheckOut", null)
-                        .WithMany("ClassRooms")
-                        .HasForeignKey("CheckOut_Id");
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Phanmemquanlyghidanh.Models.Schedule", null)
                         .WithMany("ClassRooms")
-                        .HasForeignKey("Schedule_Id1");
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Phanmemquanlyghidanh.Models.StatusRoom", null)
                         .WithMany("Classrooms")
-                        .HasForeignKey("StatusRoom_Id1");
+                        .HasForeignKey("StatusRoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Phanmemquanlyghidanh.Models.Subject", null)
                         .WithMany("Classrooms")
@@ -473,7 +478,9 @@ namespace Phanmemquanlyghidanh.Migrations
                 {
                     b.HasOne("Phanmemquanlyghidanh.Models.Account", null)
                         .WithMany("marks")
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Phanmemquanlyghidanh.Models.Subject", null)
                         .WithMany("marks")
@@ -490,7 +497,9 @@ namespace Phanmemquanlyghidanh.Migrations
                 {
                     b.HasOne("Phanmemquanlyghidanh.Models.Course", null)
                         .WithMany("Subjects")
-                        .HasForeignKey("Course_Id1");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Phanmemquanlyghidanh.Models.SubjectCategory", null)
                         .WithMany("Subjects")
@@ -503,14 +512,14 @@ namespace Phanmemquanlyghidanh.Migrations
                 {
                     b.Navigation("ClassRooms");
 
+                    b.Navigation("checkouts");
+
                     b.Navigation("marks");
                 });
 
-            modelBuilder.Entity("Phanmemquanlyghidanh.Models.CheckOut", b =>
+            modelBuilder.Entity("Phanmemquanlyghidanh.Models.ClassRoom", b =>
                 {
-                    b.Navigation("Accounts");
-
-                    b.Navigation("ClassRooms");
+                    b.Navigation("checkOuts");
                 });
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.Course", b =>

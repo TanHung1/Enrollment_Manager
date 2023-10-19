@@ -32,7 +32,7 @@ builder.Services.AddTransient<ICheckOutRepository, CheckOutRepository>();
 builder.Services.AddTransient<IClassRoomRepository, ClassRoomRepository>();
 builder.Services.AddTransient<IMarkRepository, MarkRepository>();
 builder.Services.AddTransient<ISubjectRepository, SubjectRepository>();
-builder.Services.AddTransient<IStatusCheckOutRepository, StatusCheckOutRepository>();
+
 
 var app = builder.Build();
 

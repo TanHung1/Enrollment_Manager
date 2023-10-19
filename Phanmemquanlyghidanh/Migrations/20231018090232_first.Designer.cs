@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Phanmemquanlyghidanh.Models;
 
@@ -11,9 +12,11 @@ using Phanmemquanlyghidanh.Models;
 namespace Phanmemquanlyghidanh.Migrations
 {
     [DbContext(typeof(EnrollmentDBContext))]
-    partial class EnrollmentDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231018090232_first")]
+    partial class first
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,7 +69,7 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Subject")
@@ -100,28 +103,28 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.Property<int?>("ClassRoom_Id1")
                         .HasColumnType("int");
 
+                    b.Property<string>("FeeType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Note")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("PricePaid")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("RemainingPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("StatusCheckOut")
+                    b.Property<string>("Price")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StatusCheckOutId")
+                        .HasColumnType("int");
 
                     b.HasKey("CheckOutId");
 
                     b.HasIndex("AccountId");
 
                     b.HasIndex("ClassRoom_Id1");
+
+                    b.HasIndex("StatusCheckOutId");
 
                     b.ToTable("CheckOuts");
                 });
@@ -151,6 +154,9 @@ namespace Phanmemquanlyghidanh.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Fee")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("NumberofStudent")
                         .HasColumnType("int");
 
@@ -166,14 +172,11 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.Property<int>("StatusRoomId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SubjectId")
+                    b.Property<int?>("SubjectId")
                         .HasColumnType("int");
 
                     b.Property<string>("TimeClass")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TuitionFee")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ClassRoom_Id");
 
@@ -335,6 +338,23 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.ToTable("Schedules");
                 });
 
+            modelBuilder.Entity("Phanmemquanlyghidanh.Models.StatusCheckOut", b =>
+                {
+                    b.Property<int>("StatusCheckOutId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusCheckOutId"));
+
+                    b.Property<string>("StatusCheckOutName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StatusCheckOutId");
+
+                    b.ToTable("StatusCheckouts");
+                });
+
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.StatusRoom", b =>
                 {
                     b.Property<int>("StatusRoomId")
@@ -428,9 +448,7 @@ namespace Phanmemquanlyghidanh.Migrations
                 {
                     b.HasOne("Phanmemquanlyghidanh.Models.Role", null)
                         .WithMany("Accounts")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoleId");
                 });
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.CheckOut", b =>
@@ -444,6 +462,12 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.HasOne("Phanmemquanlyghidanh.Models.ClassRoom", null)
                         .WithMany("checkOuts")
                         .HasForeignKey("ClassRoom_Id1");
+
+                    b.HasOne("Phanmemquanlyghidanh.Models.StatusCheckOut", null)
+                        .WithMany("CheckOuts")
+                        .HasForeignKey("StatusCheckOutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.ClassRoom", b =>
@@ -468,9 +492,7 @@ namespace Phanmemquanlyghidanh.Migrations
 
                     b.HasOne("Phanmemquanlyghidanh.Models.Subject", null)
                         .WithMany("Classrooms")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SubjectId");
                 });
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.Mark", b =>
@@ -534,6 +556,11 @@ namespace Phanmemquanlyghidanh.Migrations
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.Schedule", b =>
                 {
                     b.Navigation("ClassRooms");
+                });
+
+            modelBuilder.Entity("Phanmemquanlyghidanh.Models.StatusCheckOut", b =>
+                {
+                    b.Navigation("CheckOuts");
                 });
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.StatusRoom", b =>

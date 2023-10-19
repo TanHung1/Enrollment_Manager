@@ -5,7 +5,7 @@ namespace Phanmemquanlyghidanh.Models
     public class Account
     {
         [Key]
-        public int Id { get; set; }
+        public int AccountId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
@@ -24,6 +24,7 @@ namespace Phanmemquanlyghidanh.Models
         public string? Password { get; set; }
         public DateTime CooperationDay { get; set; }
 
+        public int RoleId { get; set; }
 
         public string? Subject { get; set; }
 
@@ -31,6 +32,8 @@ namespace Phanmemquanlyghidanh.Models
 
 
         public ICollection<ClassRoom> ClassRooms { get; set; }
+
+        public ICollection<CheckOut> checkouts { get; set; } = new List<CheckOut>();
 
     }
 }

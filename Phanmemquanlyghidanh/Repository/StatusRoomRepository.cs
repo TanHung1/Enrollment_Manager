@@ -31,7 +31,7 @@ namespace Phanmemquanlyghidanh.Repository
 
         public bool Delete(int id)
         {
-            StatusRoom s = _dbcontext.StatusRooms.FirstOrDefault(x => x.StatusRoom_Id == id);
+            StatusRoom s = _dbcontext.StatusRooms.FirstOrDefault(x => x.StatusRoomId == id);
             _dbcontext.Remove(s);
             _dbcontext.SaveChanges();
             return true;
@@ -46,7 +46,7 @@ namespace Phanmemquanlyghidanh.Repository
 
         public StatusRoom GetById(int id)
         {
-            StatusRoom st = _dbcontext.StatusRooms.FirstOrDefault(x => x.StatusRoom_Id == id);
+            StatusRoom st = _dbcontext.StatusRooms.FirstOrDefault(x => x.StatusRoomId == id);
             return st;
         }
 
@@ -57,7 +57,7 @@ namespace Phanmemquanlyghidanh.Repository
 
         public bool Update(StatusRoom statusRoom)
         {
-            StatusRoom s = _dbcontext.StatusRooms.FirstOrDefault(x => x.StatusRoom_Id == statusRoom.StatusRoom_Id);
+            StatusRoom s = _dbcontext.StatusRooms.FirstOrDefault(x => x.StatusRoomId == statusRoom.StatusRoomId);
             if (s == null)
             {
                 _dbcontext.Entry(s).CurrentValues.SetValues(statusRoom);

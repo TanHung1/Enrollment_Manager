@@ -56,7 +56,7 @@ namespace Phanmemquanlyghidanh.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateCourse(int id, Course course)
         {
-            course.Course_Id = id;
+            course.CourseId = id;
             var result = _courseRepository.Update(course);
             if (result)
             {

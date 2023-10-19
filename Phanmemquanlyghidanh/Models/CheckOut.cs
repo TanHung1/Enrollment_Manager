@@ -5,21 +5,23 @@ namespace Phanmemquanlyghidanh.Models
     public class CheckOut
     {
         [Key]
-        public int CheckOut_Id { get; set; }
+        public int CheckOutId { get; set; }
 
         public string CheckOut_Name { get; set; }
 
+        public int ClassRoom_Id { get; set; }
 
-        public string FeeType { get; set; }
+        public int AccountId { get; set; }
 
         public string Note { get; set; }
 
-        public string Price { get; set; }
+        public decimal PricePaid { get; set; }
+        public decimal Price { get; set; }
+
+        public decimal RemainingPrice { get; set; }
+
+        public string StatusCheckOut { get; set; }
 
 
-        public int StatusCheckOutId { get; set; }
-        public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
-
-        public virtual ICollection<ClassRoom> ClassRooms { get; set; } = new List<ClassRoom>();
     }
 }

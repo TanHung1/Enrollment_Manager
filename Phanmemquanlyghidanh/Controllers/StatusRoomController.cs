@@ -57,7 +57,7 @@ namespace Phanmemquanlyghidanh.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, StatusRoom statusRoom)
         {
-            statusRoom.StatusRoom_Id = id;
+            statusRoom.StatusRoomId = id;
             var resutl = _statusRoomRepository.Update(statusRoom);
             if (resutl)
             {

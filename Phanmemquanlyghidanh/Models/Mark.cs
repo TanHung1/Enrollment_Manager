@@ -23,7 +23,7 @@ namespace Phanmemquanlyghidanh.Models
 
         public int SubjectId { get; set; }
 
-        public int Id { get; set; }
+        public int AccountId { get; set; }
 
 
     }

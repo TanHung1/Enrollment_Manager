@@ -71,7 +71,7 @@ namespace Phanmemquanlyghidanh.Controllers
         {
             if (_accountRepository.CreateAccount(account))
             {
-                return CreatedAtAction(nameof(GetAccount), new { id = account.Id }, account);
+                return CreatedAtAction(nameof(GetAccount), new { id = account.AccountId }, account);
             }
 
             return BadRequest();
@@ -81,7 +81,7 @@ namespace Phanmemquanlyghidanh.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateAccount(int id, Account account)
         {
-            if (id != account.Id)
+            if (id != account.AccountId)
             {
                 return BadRequest();
             }

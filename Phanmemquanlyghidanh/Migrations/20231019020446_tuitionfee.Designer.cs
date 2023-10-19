@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Phanmemquanlyghidanh.Models;
 
@@ -11,9 +12,11 @@ using Phanmemquanlyghidanh.Models;
 namespace Phanmemquanlyghidanh.Migrations
 {
     [DbContext(typeof(EnrollmentDBContext))]
-    partial class EnrollmentDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231019020446_tuitionfee")]
+    partial class tuitionfee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,6 +154,9 @@ namespace Phanmemquanlyghidanh.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Fee")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("NumberofStudent")
                         .HasColumnType("int");
 
@@ -166,7 +172,7 @@ namespace Phanmemquanlyghidanh.Migrations
                     b.Property<int>("StatusRoomId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SubjectId")
+                    b.Property<int?>("SubjectId")
                         .HasColumnType("int");
 
                     b.Property<string>("TimeClass")
@@ -468,9 +474,7 @@ namespace Phanmemquanlyghidanh.Migrations
 
                     b.HasOne("Phanmemquanlyghidanh.Models.Subject", null)
                         .WithMany("Classrooms")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SubjectId");
                 });
 
             modelBuilder.Entity("Phanmemquanlyghidanh.Models.Mark", b =>
