@@ -31,16 +31,7 @@ namespace Phanmemquanlyghidanh.Controllers
 
             return Ok(schedule);
         }
-        [HttpGet("search/{name}")]
-        public IActionResult SearchByName(string name)
-        {
-            var SearchResults = _scheduleRepository.SearchByName(name);
-            if (!SearchResults.Any())
-            {
-                return NotFound("Không tìm thấy loại điểm");
-            }
-            return Ok(SearchResults);
-        }
+
         [HttpPost]
         public IActionResult Create(Schedule schedule)
         {

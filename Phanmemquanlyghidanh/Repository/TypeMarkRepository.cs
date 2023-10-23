@@ -17,9 +17,9 @@ namespace Phanmemquanlyghidanh.Repository
     }
     public class TypeMarkRepository : ITypeMarkRepository
     {
-        private EnrollmentDBContext _dbcontext;
+        private EnrollmentContext _dbcontext;
 
-        public TypeMarkRepository(EnrollmentDBContext dbcontext)
+        public TypeMarkRepository(EnrollmentContext dbcontext)
         {
             _dbcontext = dbcontext;
         }

@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<EnrollmentDBContext>(options =>
+builder.Services.AddDbContext<EnrollmentContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("EnrollmentDB"));
 });
@@ -21,7 +21,7 @@ builder.Services.AddDbContext<EnrollmentDBContext>(options =>
 
 
 // Defendence Intraction
-builder.Services.AddTransient<IStatusRoomRepository, StatusRoomRepository>();
+
 builder.Services.AddTransient<ISubjectCategoryRepository, SubjectCategoryRepository>();
 builder.Services.AddTransient<ITypeMarkRepository, TypeMarkRepository>();
 builder.Services.AddTransient<IHolidayScheduleRepository, HolidayScheduleRepository>();
@@ -32,6 +32,9 @@ builder.Services.AddTransient<ICheckOutRepository, CheckOutRepository>();
 builder.Services.AddTransient<IClassRoomRepository, ClassRoomRepository>();
 builder.Services.AddTransient<IMarkRepository, MarkRepository>();
 builder.Services.AddTransient<ISubjectRepository, SubjectRepository>();
+builder.Services.AddTransient<IGenderRepository, GenderRepository>();
+builder.Services.AddTransient<IRoleRepository, RoleRepository>();
+builder.Services.AddTransient<ISchoolYearRepository, SchoolYearRepository>();
 
 
 var app = builder.Build();

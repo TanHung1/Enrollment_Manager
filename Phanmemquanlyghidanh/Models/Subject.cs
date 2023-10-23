@@ -13,13 +13,11 @@ namespace Phanmemquanlyghidanh.Models
         [Required(ErrorMessage = "Tên môn học không được để trống.")]
         public string Subject_Name { get; set; }
 
-        public string Level { get; set; }
+        public virtual ICollection<ClassRoom> Classrooms { get; set; }
 
-        public int Age { get; set; }
+        public virtual ICollection<Mark> marks { get; set; }
 
-        public ICollection<ClassRoom> Classrooms { get; set; }
-
-        public ICollection<Mark> marks { get; set; }
+        public virtual ICollection<Schedule> schedules { get; set; } = new List<Schedule>();
 
 
 

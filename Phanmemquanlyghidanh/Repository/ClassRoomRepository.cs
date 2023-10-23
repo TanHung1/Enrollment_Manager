@@ -14,22 +14,23 @@ namespace Phanmemquanlyghidanh.Repository
     }
     public class ClassRoomRepository : IClassRoomRepository
     {
-        private EnrollmentDBContext _dbContext;
+        private EnrollmentContext _dbContext;
 
-        public ClassRoomRepository(EnrollmentDBContext dbContext)
+        public ClassRoomRepository(EnrollmentContext dbContext)
         {
             _dbContext = dbContext;
         }
         public bool Create(ClassRoom room)
         {
             _dbContext.ClassRooms.Add(room);
+            room.StatusRoom = "Mở";
             _dbContext.SaveChanges();
             return true;
         }
 
         public bool Delete(int Id)
         {
-            ClassRoom CR = _dbContext.ClassRooms.FirstOrDefault(x => x.ClassRoom_Id == Id);
+            ClassRoom CR = _dbContext.ClassRooms.FirstOrDefault(x => x.ClassRoomId == Id);
             _dbContext.Remove(CR);
             _dbContext.SaveChanges();
             return true;
@@ -42,21 +43,29 @@ namespace Phanmemquanlyghidanh.Repository
 
         public ClassRoom GetClassRoom(int id)
         {
-            ClassRoom CR = _dbContext.ClassRooms.FirstOrDefault(x => x.ClassRoom_Id == id);
+            ClassRoom CR = _dbContext.ClassRooms.FirstOrDefault(x => x.ClassRoomId == id);
             return CR;
         }
 
         public List<ClassRoom> SearchByName(string name)
         {
-            return _dbContext.ClassRooms.Where(x => x.ClassRoom_Name.Contains(name)).ToList();
+            return _dbContext.ClassRooms.Where(x => x.ClassRoomName.Contains(name)).ToList();
         }
 
         public bool Update(ClassRoom room)
         {
-            ClassRoom classRoom = _dbContext.ClassRooms.FirstOrDefault(x => x.ClassRoom_Id == room.ClassRoom_Id);
+            ClassRoom classRoom = _dbContext.ClassRooms.FirstOrDefault(x => x.ClassRoomId == room.ClassRoomId);
             if (classRoom != null)
             {
                 _dbContext.Entry(classRoom).CurrentValues.SetValues(room);
+                if (room.CurrentStudent == room.NumberofStudent)
+                {
+                    classRoom.StatusRoom = "Đóng";
+                }
+                else if (room.CurrentStudent < room.NumberofStudent)
+                {
+                    classRoom.StatusRoom = "Mở";
+                }
                 _dbContext.SaveChanges();
             }
             return true;

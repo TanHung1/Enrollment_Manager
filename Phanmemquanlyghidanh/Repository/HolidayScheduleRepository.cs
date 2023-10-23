@@ -16,9 +16,9 @@ namespace Phanmemquanlyghidanh.Repository
     }
     public class HolidayScheduleRepository : IHolidayScheduleRepository
     {
-        private EnrollmentDBContext _dbcontext;
+        private EnrollmentContext _dbcontext;
 
-        public HolidayScheduleRepository(EnrollmentDBContext dbcontext)
+        public HolidayScheduleRepository(EnrollmentContext dbcontext)
         {
             _dbcontext = dbcontext;
         }

@@ -14,9 +14,9 @@ namespace Phanmemquanlyghidanh.Repository
     }
     public class RoleRepository : IRoleRepository
     {
-        private EnrollmentDBContext _dbContext;
+        private EnrollmentContext _dbContext;
 
-        public RoleRepository(EnrollmentDBContext dbContext)
+        public RoleRepository(EnrollmentContext dbContext)
         {
             _dbContext = dbContext;
         }

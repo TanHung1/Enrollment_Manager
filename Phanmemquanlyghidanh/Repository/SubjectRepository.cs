@@ -16,9 +16,9 @@ namespace Phanmemquanlyghidanh.Repository
     }
     public class SubjectRepository : ISubjectRepository
     {
-        private EnrollmentDBContext _dbContext;
+        private EnrollmentContext _dbContext;
 
-        public SubjectRepository(EnrollmentDBContext dbContext)
+        public SubjectRepository(EnrollmentContext dbContext)
         {
             _dbContext = dbContext;
         }

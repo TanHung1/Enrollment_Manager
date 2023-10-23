@@ -12,13 +12,13 @@ namespace Phanmemquanlyghidanh.Repository
         public bool Update(Schedule schedule);
         public bool Delete(int Id);
 
-        public List<Schedule> SearchByName(string name);
+
     }
     public class ScheduleRepository : IScheduleRepository
     {
-        private EnrollmentDBContext _dbContext;
+        private EnrollmentContext _dbContext;
 
-        public ScheduleRepository(EnrollmentDBContext dbcontext)
+        public ScheduleRepository(EnrollmentContext dbcontext)
         {
             _dbContext = dbcontext;
         }
@@ -48,10 +48,7 @@ namespace Phanmemquanlyghidanh.Repository
             return schedule;
         }
 
-        public List<Schedule> SearchByName(string name)
-        {
-            return _dbContext.Schedules.Where(x => x.Schedule_Name.Contains(name)).ToList();
-        }
+
 
         public bool Update(Schedule schedule)
         {

@@ -15,17 +15,60 @@ namespace Phanmemquanlyghidanh.Repository
     }
     public class MarkRepository : IMarkRepository
     {
-        private EnrollmentDBContext _dbContext;
+        private EnrollmentContext _dbContext;
 
-        public MarkRepository(EnrollmentDBContext dbContext)
+        public MarkRepository(EnrollmentContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         public decimal CalculateAverageColumnPoint(Mark mark)
         {
-            decimal averageColumnPoint = (mark.FirstColumnPoint + mark.SecondColumnPoint + mark.ThirdColumnPoint
-                + mark.FourthColumnPoint + (mark.FinalExamPoint1 * 2) + (mark.FinalExamPoint2 * 2)) / 8;
+            int count = 0;
+            decimal sum = 0;
+
+            if (mark.FirstColumnPoint.HasValue)
+            {
+                sum += mark.FirstColumnPoint.Value;
+                count++;
+            }
+
+            if (mark.SecondColumnPoint.HasValue)
+            {
+                sum += mark.SecondColumnPoint.Value;
+                count++;
+            }
+
+            if (mark.ThirdColumnPoint.HasValue)
+            {
+                sum += mark.ThirdColumnPoint.Value;
+                count++;
+            }
+
+            if (mark.FourthColumnPoint.HasValue)
+            {
+                sum += mark.FourthColumnPoint.Value;
+                count++;
+            }
+
+            if (mark.FinalExamPoint1.HasValue)
+            {
+                sum += mark.FinalExamPoint1.Value * 2;
+                count++;
+            }
+
+            if (mark.FinalExamPoint2.HasValue)
+            {
+                sum += mark.FinalExamPoint2.Value * 2;
+                count++;
+            }
+
+            if (count == 0)
+            {
+                return 0;
+            }
+
+            decimal averageColumnPoint = sum / count;
             return averageColumnPoint;
         }
 

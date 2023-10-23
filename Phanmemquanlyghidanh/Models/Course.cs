@@ -13,8 +13,8 @@ namespace Phanmemquanlyghidanh.Models
         [Required(ErrorMessage = "Tên khóa không được để trống.")]
         public string CourseName { get; set; }
 
-        public ICollection<Subject> Subjects { get; set; }
+        public virtual ICollection<Subject> Subjects { get; set; } = new List<Subject>();
+
+
     }
 }
-
-

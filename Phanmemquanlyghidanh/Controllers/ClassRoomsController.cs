@@ -57,7 +57,7 @@ namespace Phanmemquanlyghidanh.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateClassRoom(int id, ClassRoom classRoom)
         {
-            classRoom.ClassRoom_Id = id;
+            classRoom.ClassRoomId = id;
             var result = _classRoomRepository.Update(classRoom);
             if (result)
             {

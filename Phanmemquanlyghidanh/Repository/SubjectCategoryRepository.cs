@@ -17,9 +17,9 @@ namespace Phanmemquanlyghidanh.Repository
 
     public class SubjectCategoryRepository : ISubjectCategoryRepository
     {
-        private EnrollmentDBContext _dbContext;
+        private EnrollmentContext _dbContext;
 
-        public SubjectCategoryRepository(EnrollmentDBContext dbContext)
+        public SubjectCategoryRepository(EnrollmentContext dbContext)
         {
             _dbContext = dbContext;
         }

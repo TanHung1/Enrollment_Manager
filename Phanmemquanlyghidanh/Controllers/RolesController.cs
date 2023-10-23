@@ -46,12 +46,8 @@ namespace Phanmemquanlyghidanh.Controllers
         [HttpPost]
         public ActionResult<Role> CreateRole(Role role)
         {
-            if (_roleRepository.Create(role))
-            {
-                return CreatedAtAction(nameof(GetRole), new { id = role.RoleId }, role);
-            }
-
-            return BadRequest();
+            _roleRepository.Create(role);
+            return Ok(role);
         }
 
         [HttpPut("{id}")]

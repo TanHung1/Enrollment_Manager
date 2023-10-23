@@ -39,9 +39,9 @@ namespace Phanmemquanlyghidanh.Controllers
         }
 
         [HttpGet("search/{name}")]
-        public IActionResult SearchByName(string name)
+        public IActionResult Search(string seach)
         {
-            var SearchResult = _accountRepository.SearchByName(name);
+            var SearchResult = _accountRepository.Search(seach);
             if (!SearchResult.Any())
             {
                 return NotFound("Không tìm thấy");

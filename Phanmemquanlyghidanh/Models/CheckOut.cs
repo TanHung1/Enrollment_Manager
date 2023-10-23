@@ -9,12 +9,13 @@ namespace Phanmemquanlyghidanh.Models
 
         public string CheckOut_Name { get; set; }
 
-        public int ClassRoom_Id { get; set; }
+        public int ClassRoomId { get; set; }
 
         public int AccountId { get; set; }
 
         public string Note { get; set; }
 
+        public decimal Discount { get; set; }
         public decimal PricePaid { get; set; }
         public decimal Price { get; set; }
 

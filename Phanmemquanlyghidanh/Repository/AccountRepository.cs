@@ -14,7 +14,7 @@ namespace Phanmemquanlyghidanh.Repository
         public bool DeleteAccount(int Id);
         public Account GetAccountById(int id);
 
-        public List<Account> SearchByName(string name);
+        public List<Account> Search(string search);
         public Task<Account> Register(Account account);
 
         public Task<Account> Login(string email, string password);
@@ -22,27 +22,56 @@ namespace Phanmemquanlyghidanh.Repository
     }
     public class AccountRepository : IAccountRepository
     {
-        private EnrollmentDBContext _dbContext;
+        private EnrollmentContext _dbContext;
 
-        public AccountRepository(EnrollmentDBContext dbContext)
+        public AccountRepository(EnrollmentContext dbContext)
         {
             _dbContext = dbContext;
         }
         public bool CreateAccount(Account account)
         {
+            if (!account.Email.EndsWith("@gmail.com"))
+            {
+                account.Email += "@gmail.com";
+            }
             string hashedPassword = HashPassword(account.Password);
             account.Password = hashedPassword;
-            //account.RoleId = 3;
+
             _dbContext.Accounts.Add(account);
             _dbContext.SaveChanges();
+
+            //Kiểm tra xem SubjectId có được điền vào hay không
+            if (account.ClassRoomId != null)
+            {
+                // Tăng giá trị currentStudent của lớp đó
+                ClassRoom classRoom = _dbContext.ClassRooms.FirstOrDefault(c => c.ClassRoomId == account.ClassRoomId);
+                if (classRoom != null)
+                {
+                    classRoom.CurrentStudent++;
+                    _dbContext.SaveChanges();
+                }
+            }
+
             return true;
         }
 
         public bool DeleteAccount(int Id)
         {
             Account acc = _dbContext.Accounts.FirstOrDefault(x => x.AccountId == Id);
-            _dbContext.Remove(acc);
-            _dbContext.SaveChanges();
+            if (acc != null)
+            {
+                int classRoomId = acc.ClassRoomId;
+                _dbContext.Remove(acc);
+                _dbContext.SaveChanges();
+
+                ClassRoom classRoom = _dbContext.ClassRooms.FirstOrDefault(c => c.ClassRoomId == classRoomId);
+                if (classRoom != null && classRoom.CurrentStudent > 0)
+                {
+                    classRoom.CurrentStudent--;
+                    _dbContext.SaveChanges();
+                }
+            }
+
             return true;
         }
 
@@ -76,9 +105,11 @@ namespace Phanmemquanlyghidanh.Repository
             return account;
         }
 
-        public List<Account> SearchByName(string name)
+        public List<Account> Search(string search)
         {
-            return _dbContext.Accounts.Where(x => x.LastName.Contains(name)).ToList();
+            return _dbContext.Accounts.Where(x => x.LastName.Contains(search) ||
+                                                  x.Email.Contains(search) ||
+                                                  x.PhoneNumber.Contains(search)).ToList();
         }
 
         public bool UpdateAccount(Account account)

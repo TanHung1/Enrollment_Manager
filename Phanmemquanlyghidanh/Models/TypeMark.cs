@@ -12,7 +12,7 @@ namespace Phanmemquanlyghidanh.Models
         [Required(ErrorMessage = "Hệ số không được để trống.")]
         public string Coefficient { get; set; }
 
-        public ICollection<Mark> Marks { get; set; }
+        public virtual ICollection<Mark> Marks { get; set; } = new List<Mark>();
 
     }
 }

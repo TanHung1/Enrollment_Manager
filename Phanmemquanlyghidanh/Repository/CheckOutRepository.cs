@@ -15,9 +15,9 @@ namespace Phanmemquanlyghidanh.Repository
     }
     public class CheckOutRepository : ICheckOutRepository
     {
-        private EnrollmentDBContext _dbContext;
+        private EnrollmentContext _dbContext;
 
-        public CheckOutRepository(EnrollmentDBContext dbContext)
+        public CheckOutRepository(EnrollmentContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -54,7 +54,9 @@ namespace Phanmemquanlyghidanh.Repository
             if (co != null)
             {
                 _dbContext.Entry(co).CurrentValues.SetValues(checkOut);
-                if (checkOut.Price - checkOut.PricePaid == checkOut.RemainingPrice && checkOut.RemainingPrice == 0)
+                decimal discountAmount = checkOut.Price * (checkOut.Discount / 100);
+                co.Price -= discountAmount;
+                if (checkOut.Price - checkOut.PricePaid == checkOut.RemainingPrice && checkOut.RemainingPrice == 0 && checkOut.RemainingPrice > 0)
                 {
                     co.StatusCheckOut = "Đã thanh toán";
                 }

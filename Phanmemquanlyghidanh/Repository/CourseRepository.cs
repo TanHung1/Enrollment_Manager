@@ -16,9 +16,9 @@ namespace Phanmemquanlyghidanh.Repository
     }
     public class CourseRepository : ICourseRepository
     {
-        private EnrollmentDBContext _dbcontext;
+        private EnrollmentContext _dbcontext;
 
-        public CourseRepository(EnrollmentDBContext dbcontext)
+        public CourseRepository(EnrollmentContext dbcontext)
         {
             _dbcontext = dbcontext;
         }
